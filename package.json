@@ -1,6 +1,6 @@
 {
   "name": "most-wf",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Most Web Framework Workflow Services",
   "homepage": "http://www.most-framework.com/",
   "repository": {
@@ -8,11 +8,11 @@
     "url": "https://github.com/kbarbounakis/most-wf.git"
   },
   "keywords": [
-	"most-wf.js",
-	"most-wfjs",
-	"framework",
-	"workflows",
-	"services"
+    "most-wf.js",
+    "most-wfjs",
+    "framework",
+    "workflows",
+    "services"
   ],
   "author": {
     "name": "Kyriakos Barbounakis",
@@ -23,10 +23,12 @@
       "type": "BSD-3 Clause"
     }
   ],
-  "dependencies": { "async":"0.9.0" },
-  "devDependencies": { },
+  "dependencies": {
+    "async": "0.9.0"
+  },
+  "devDependencies": {},
   "main": "index",
-  "scripts": { },
+  "scripts": {},
   "_id": "most-wf@1.4.0",
   "_from": "most-wf@"
 }
