@@ -1,41 +1,41 @@
 {
-    "name": "most-wf",
-    "version": "1.4.1",
-    "description": "Most Web Framework Business Process Services",
-    "homepage": "http://www.most-framework.com/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/kbarbounakis/most-wf.git"
-    },
-    "keywords": [
-        "most-web",
-        "most-wf",
-        "bpmn",
-        "bpmn2",
-        "web",
-        "framework",
-        "workflows",
-        "services",
-        "business processes"
-    ],
-    "author": {
-        "name": "Kyriakos Barbounakis",
-        "email": "k.barbounakis@gmail.com"
-    },
-    "licenses": [
-        {
-            "type": "BSD-3 Clause"
-        }
-    ],
-    "dependencies": {
-        "async": "0.9.0",
-        "most-xml": "~0.3.4",
-        "most-web": "~1.7.19",
-        "bpmn": "~0.2.0"
-    },
-    "devDependencies": {},
-    "main": "index",
-    "scripts": {},
-    "_id": "most-wf@1.4.0",
-    "_from": "most-wf@"
+  "name": "most-wf",
+  "version": "1.4.2",
+  "description": "Most Web Framework Business Process Services",
+  "homepage": "http://www.most-framework.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kbarbounakis/most-wf.git"
+  },
+  "keywords": [
+    "most-web",
+    "most-wf",
+    "bpmn",
+    "bpmn2",
+    "web",
+    "framework",
+    "workflows",
+    "services",
+    "business processes"
+  ],
+  "author": {
+    "name": "Kyriakos Barbounakis",
+    "email": "k.barbounakis@gmail.com"
+  },
+  "licenses": [
+    {
+      "type": "BSD-3 Clause"
+    }
+  ],
+  "dependencies": {
+    "async": "0.9.0",
+    "most-xml": "~0.3.4",
+    "most-web": "~1.7.19",
+    "bpmn": "~0.2.0"
+  },
+  "devDependencies": {},
+  "main": "index",
+  "scripts": {},
+  "_id": "most-wf@1.4.0",
+  "_from": "most-wf@"
 }
