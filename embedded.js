@@ -189,11 +189,13 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                             var attachedToRef = boundaryEvent.attachedToRef;
                                                             var activity = self.getFlowObject(attachedToRef);
                                                             if (activity) {
-                                                                var entry = index[attachedToRef];
-                                                                if (entry) {
-                                                                    entry.push(boundaryEvent);
-                                                                } else {
-                                                                    index[attachedToRef] = [boundaryEvent];
+                                                                if (activity.isWaitTask) {
+                                                                    var entry = index[attachedToRef];
+                                                                    if (entry) {
+                                                                        entry.push(boundaryEvent);
+                                                                    } else {
+                                                                        index[attachedToRef] = [boundaryEvent];
+                                                                    }
                                                                 }
                                                             } else {
                                                                 throw new Error("Cannot find the activity the boundary event '" + boundaryEvent.name +
@@ -266,7 +268,28 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                                //find start event
                                                                var startEvent = processDefinition.flowObjects.find(function(x) { return x.isStartEvent; });
                                                                //and trigger start
-                                                               instanceProcess.triggerEvent(startEvent.name);
+                                                               if (typeof instanceProcess.instance.target === 'function') {
+                                                                   instanceProcess.instance.target(function(err, result) {
+                                                                      if (err) {
+                                                                          instanceProcess.instance.status = types.ActivityExecutionResult.Faulted;
+                                                                          instanceProcess.instance.save(context, function(err) {
+                                                                              if (err) {
+                                                                                  context.finalize(function () {
+                                                                                      cb(err);
+                                                                                  });
+                                                                              }
+                                                                          });
+                                                                      }
+                                                                       else {
+                                                                          //set instance target data
+                                                                          instanceProcess.data = result;
+                                                                          instanceProcess.triggerEvent(startEvent.name, result);
+                                                                      }
+                                                                   });
+                                                               }
+                                                               else {
+                                                                   instanceProcess.triggerEvent(startEvent.name);
+                                                               }
                                                                cb();
                                                            }
                                                         });
