@@ -27,10 +27,15 @@ function EmbeddedProcessEngine(application) {
      */
     this.application = application;
     /**
-     * Gets or sets the in-process interval for workflow searching
+     * Gets or sets the in-process interval for business process searching
      * @type {number}
      */
     this.interval = 10000;
+    /**
+     * Gets or sets the in-process bad execution retries for business processes
+     * @type {number}
+     */
+    this.badExecutionTimes = 4;
     /**
      * Indicates whether workflow engine is started or not.
      * @type {boolean}
@@ -348,7 +353,7 @@ function engine_timer(self) {
                         context.finalize(resetWorking);
                     }
                     else {
-                        web.common.debug(util.format('Executing the collection of the process instances (% item(s)).', result.length));
+                        web.common.debug(util.format('Executing the collection of the process instances (%s item(s)).', result.length));
                         async.eachSeries(result, function(instance, cb) {
                             self.load(context, instance, function(err) {
                                 if (err) {
