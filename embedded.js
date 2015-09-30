@@ -14,6 +14,44 @@ var async = require('async'),
     web = require('most-web'),
     util = require('util'),
     types = require('./types');
+
+function createLogger() {
+    var winston = require("winston"),
+        /**
+         * @type {{mkdir:Function,mkdirSync}}
+         */
+        fs = require('fs');
+    if (process.env.NODE_ENV==='development') {
+        return new (winston.Logger)({
+            transports: [
+                new (winston.transports.Console)({ level: 'debug', json:false, timestamp: function() { return (new Date()).toUTCString(); } })
+            ]
+        });
+    }
+    else {
+        var logger = new (winston.Logger)({
+            transports: [
+                new (winston.transports.File)({ level: (process.env.NODE_ENV==='development')?'debug':'info',timestamp: function() { return (new Date()).toUTCString(); }, filename: path.join(process.cwd(), 'logs/bmpn.log'), json:false, maxsize:1536000})
+            ]
+        });
+        try {
+            fs.mkdirSync(path.join(process.cwd(), 'logs'));
+            return logger;
+        }
+        catch(e) {
+            if (e.code!=='EEXIST') {
+                console.log('An error occured while creating log directory (/logs/).Process logging is falling to console only logging.');
+                return new (winston.Logger)({
+                    transports: [
+                        new (winston.transports.Console)({ level: (process.env.NODE_ENV==='development')?'debug':'info' })
+                    ]
+                });
+            }
+            return logger;
+        }
+    }
+}
+
 /**
  * @class EmbeddedProcessEngine
  * @param {HttpApplication} application
@@ -41,6 +79,8 @@ function EmbeddedProcessEngine(application) {
      * @type {boolean}
      */
     this.started = false;
+
+    this.logger = createLogger();
 }
 util.inherits(EmbeddedProcessEngine, types.BusinessProcessRuntime);
 
@@ -63,6 +103,24 @@ EmbeddedProcessEngine.prototype.start = function() {
         throw e;
     }
 };
+/**
+ * @param {string} level
+ * @param {string} message
+ * @param {*=} p1
+ * @param {*=} p2
+ * @returns {EmbeddedProcessEngine}
+ */
+EmbeddedProcessEngine.prototype.log = function(level,message,p1,p2) {
+    try {
+        if (this.logger) {
+            this.logger.log.apply(this.logger,arguments);
+            return this;
+        }
+    }
+    catch (e) {
+        //
+    }
+};
 
 EmbeddedProcessEngine.prototype.stop = function() {
     try {
@@ -79,6 +137,11 @@ EmbeddedProcessEngine.prototype.stop = function() {
         throw e;
     }
 };
+
+function log() {
+
+}
+
 /**
  * Loads and executes a process instance.
  * @param {HttpContext} context
@@ -95,7 +158,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
         }
         var processInstances = context.model('ProcessInstance'),
             processTemplates = context.model('ProcessTemplate');
-        web.common.debug(util.format('Loading business process instance with ID [%s].', instance.id));
+        self.log('debug','Loading business process instance with ID [%s].', instance.id);
         processInstances.where('id').equal(instance.id).silent().flatten().first(function(err, result) {
             if (err) {
                 callback(err);
@@ -105,21 +168,21 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                     callback();
                 }
                 else {
-                    //ensure workflow status
+                    //ensure process status
                     if (result.status !== types.ActivityExecutionResult.None) {
                         callback();
                         return;
                     }
 
                     var instance = result, template;
-                    web.common.debug(util.format('Processing business process instance with ID [%s].', instance.id));
+                    self.log('debug', 'Processing business process instance with ID [%s].', instance.id);
                     async.series([
                         /**
                          * Gets instance template
                          * @param {function(Error=)} cb
                          */
                             function(cb) {
-                            web.common.debug(util.format('Getting business process instance [%s] template.', instance.id));
+                            self.log('debug', 'Getting business process instance [%s] template.', instance.id);
                             processTemplates.where('id').equal(result.template).silent().first(function(err, res) {
                                 if (err) {
                                     cb(err);
@@ -138,7 +201,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                          * @param {function(Error=)} cb
                          */
                             function(cb) {
-                            web.common.debug(util.format('Mapping business process instance [%s].', instance.id));
+                            self.log('debug','Mapping business process instance [%s].', instance.id);
                             result.additionalType=result.additionalType || 'ProcessInstance';
                             if (result.additionalType!=='ProcessInstance') {
                                 var instanceModel = context.model(result.additionalType);
@@ -166,9 +229,9 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                          * @param {function(Error=)} cb
                          */
                             function(cb) {
-                            web.common.debug(util.format('Executing business process instance [%s].', instance.id));
+                            self.log('debug', 'Executing business process instance [%s].', instance.id);
                             var bpmnPath = path.join(process.cwd(), template.url);
-                            web.common.debug(util.format('Loading business process instance [%s] XML.', instance.id));
+                            self.log('debug', 'Loading business process instance [%s] XML.', instance.id);
                             xml.load(bpmnPath, function(err, bpmnDoc) {
                                 try {
                                     if (err) {
@@ -181,7 +244,15 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                         if (node) {
                                             bpmn.createUnmanagedProcess(bpmnPath, function(err, instanceProcess){
                                                 try {
-
+                                                    /**
+                                                     * @param {string} level
+                                                     * @param {string} message
+                                                     * @param {*=} p1
+                                                     * @param {*=} p2
+                                                     */
+                                                    instanceProcess.log = function(level, message, p1, p2) {
+                                                        self.log.apply(self, arguments);
+                                                    };
                                                     /**
                                                      * gets boundary events (customize prototype BPMMNProcessDefinition in order to allow attaching boundary error events)
                                                      * @returns {{}}
@@ -208,6 +279,25 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                             }
                                                         });
                                                         return index;
+                                                    };
+
+                                                    instanceProcess._implementation.onBeginHandler = function(currentFlowObjectName, data, done) {
+                                                        var processDefinition = this.getProcessDefinition(),
+                                                            currentFlowObject = processDefinition.flowObjects.find(function(x) { return x.name === currentFlowObjectName; });
+                                                        //save current executing flow object
+                                                        var context = instanceProcess.instance.context,
+                                                            meta = JSON.parse(instanceProcess.instance['metadata']) || { };
+                                                        meta.state = meta.state || { };
+                                                        meta.state.lastFlowObject = currentFlowObject.bpmnId;
+                                                        instanceProcess.instance['metadata'] = JSON.stringify(meta);
+                                                        instanceProcess.instance.save(context, function(err) {
+                                                            if (err) {
+                                                                done(err);
+                                                            }
+                                                            else {
+                                                                done(data);
+                                                            }
+                                                        });
                                                     };
 
                                                     instanceProcess._implementation.onEndHandler = function(currentFlowObjectName, data, done) {
@@ -342,22 +432,22 @@ function engine_timer(self) {
         self.working = true;
         self.application.unattended(function(context) {
             try {
-                web.common.debug('Getting process instances which have not being started yet.');
+                self.log('debug','Getting process instances which have not being started yet.');
                 context.model('ProcessInstance').where('status').equal(types.ActivityExecutionResult.None).and('executionDate').lowerOrEqual(new Date()).silent().select('id').take(10, function(err, result) {
                     if (err) {
                         web.common.log(err);
                         context.finalize(resetWorking);
                     }
                     else if (result.length==0) {
-                        web.common.debug('There are no pending business process instances.');
+                        self.log('debug','There are no pending business process instances.');
                         context.finalize(resetWorking);
                     }
                     else {
-                        web.common.debug(util.format('Executing the collection of the process instances (%s item(s)).', result.length));
+                        self.log('debug','Executing the collection of the process instances (%s item(s)).', result.length);
                         async.eachSeries(result, function(instance, cb) {
                             self.load(context, instance, function(err) {
                                 if (err) {
-                                    web.common.log('An error occured while trying to load business process instance with ID ' + instance.id);
+                                    self.log('error','An error occured while trying to load business process instance with ID ' + instance.id);
                                     web.common.log(err);
                                 }
                                 cb();
@@ -437,6 +527,7 @@ var embedded = {
      */
     EmbeddedProcessInstanceClient: EmbeddedProcessInstanceClient
 };
+
 
 if (typeof exports !== 'undefined') {
     module.exports = embedded;

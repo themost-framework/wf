@@ -29,9 +29,10 @@
   ],
   "dependencies": {
     "async": "0.9.0",
-    "most-xml": "~0.3.4",
+    "bpmn": "~0.2.0",
     "most-web": "~1.7.19",
-    "bpmn": "~0.2.0"
+    "most-xml": "~0.3.4",
+    "winston": "^1.0.2"
   },
   "devDependencies": {},
   "main": "index",
