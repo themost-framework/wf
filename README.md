@@ -1,3 +1,3 @@
 # most-wf
 
-Most Web Framework Busines Process Management Module
+Most Web Framework BPMN Module
