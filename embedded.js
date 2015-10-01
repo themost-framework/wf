@@ -31,7 +31,7 @@ function createLogger() {
     else {
         var logger = new (winston.Logger)({
             transports: [
-                new (winston.transports.File)({ level: (process.env.NODE_ENV==='development')?'debug':'info',timestamp: function() { return (new Date()).toUTCString(); }, filename: path.join(process.cwd(), 'logs/bmpn.log'), json:false, maxsize:1536000})
+                new (winston.transports.File)({ level: (process.env.NODE_ENV==='development')?'debug':'info',timestamp: function() { return (new Date()).toUTCString(); }, filename: path.join(process.cwd(), 'logs/bpmn.log'), json:false, maxsize:1536000})
             ]
         });
         try {
