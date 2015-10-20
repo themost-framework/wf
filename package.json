@@ -32,7 +32,8 @@
     "bpmn": "~0.2.0",
     "most-web": "~1.7.19",
     "most-xml": "~0.3.4",
-    "winston": "^1.0.2"
+    "winston": "^1.0.2",
+    "moment": "^2.10.2"
   },
   "devDependencies": {},
   "main": "index",

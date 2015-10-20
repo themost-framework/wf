@@ -13,7 +13,8 @@ var async = require('async'),
     xml = require('most-xml'),
     web = require('most-web'),
     util = require('util'),
-    types = require('./types');
+    types = require('./types'),
+    moment = require("moment");
 
 function createLogger() {
     var winston = require("winston"),
@@ -281,6 +282,18 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                         return index;
                                                     };
 
+                                                    instanceProcess.meta = function(name, value) {
+                                                        var meta = JSON.parse(this.instance['metadata']) || { };
+                                                        if (typeof value === 'undefined') {
+                                                            return meta[name];
+                                                        }
+                                                        else {
+                                                            meta[name]=value;
+                                                            this.instance['metadata'] = JSON.stringify(meta);
+                                                            return this;
+                                                        }
+                                                    };
+
                                                     instanceProcess._implementation.onBeginHandler = function(currentFlowObjectName, data, done) {
                                                         var processDefinition = this.getProcessDefinition(),
                                                             currentFlowObject = processDefinition.flowObjects.find(function(x) { return x.name === currentFlowObjectName; });
@@ -316,8 +329,24 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                                     $this.instance.status = types.ActivityExecutionResult.Faulted; //Faulted
                                                                 }
                                                                 else {
-                                                                    //set status to Succeeded
-                                                                    $this.instance.status = types.ActivityExecutionResult.Succeeded; //Succeeded
+                                                                    if ($this.reload) {
+                                                                        //set status to Started
+                                                                        $this.instance.status = types.ActivityExecutionResult.None;
+                                                                        if ($this.instance.executionDate instanceof Date) {
+                                                                            if ($this.instance.executionDate<=(new Date())) {
+                                                                                //execute again in 4 minutes
+                                                                                $this.instance.executionDate = moment().add(4,'m').toDate();
+                                                                            }
+                                                                        }
+                                                                        else {
+                                                                            $this.instance.executionDate = moment().add(4,'m').toDate()
+                                                                        }
+                                                                    }
+                                                                    else {
+                                                                        //set status to Succeeded
+                                                                        $this.instance.status = types.ActivityExecutionResult.Succeeded; //Succeeded
+                                                                    }
+
                                                                 }
                                                                 $this.instance.save($context, function(err) {
                                                                     //and finalize context
