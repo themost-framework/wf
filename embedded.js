@@ -462,7 +462,11 @@ function engine_timer(self) {
         self.application.unattended(function(context) {
             try {
                 self.log('debug','Getting process instances which have not being started yet.');
-                context.model('ProcessInstance').where('status').equal(types.ActivityExecutionResult.None).and('executionDate').lowerOrEqual(new Date()).silent().select('id').take(10, function(err, result) {
+                var q = context.model('ProcessInstance').where('status').equal(types.ActivityExecutionResult.None)
+                    .or('status').equal(types.ActivityExecutionResult.Faulted)
+                    .or('status').equal(types.ActivityExecutionResult.Paused)
+                    .prepare();
+                q.where('badExecutionCount').lowerThan(self.badExecutionTimes).and('executionDate').lowerOrEqual(new Date()).silent().select('id').take(10, function(err, result) {
                     if (err) {
                         web.common.log(err);
                         context.finalize(resetWorking);
