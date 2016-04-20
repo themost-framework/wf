@@ -241,7 +241,10 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                     }
                                     else {
                                         //find start event
-                                        var node = bpmnDoc.selectSingleNode('bpmn2:definitions/bpmn2:process/bpmn2:startEvent');
+                                        var ns = [
+                                            { prefix:'bpmn2', uri:'http://www.omg.org/spec/BPMN/20100524/MODEL' }    
+                                        ];
+                                        var node = bpmnDoc.selectSingleNode('bpmn2:definitions/bpmn2:process/bpmn2:startEvent', ns);
                                         if (node) {
                                             bpmn.createUnmanagedProcess(bpmnPath, function(err, instanceProcess){
                                                 try {

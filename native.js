@@ -14,7 +14,8 @@ var types = require('./types'),
     xml = require('most-xml'),
     DEFAULT_NS = [
         { prefix:'bpmn2', uri:'http://www.omg.org/spec/BPMN/20100524/MODEL' },
-        { prefix:'most', uri:'http://www.themost.io/schemas/bmpn' }
+        { prefix:'most', uri:'http://www.themost.io/schemas/bmpn' },
+        { prefix:'drools', uri:'http://www.jboss.org/drools' }
     ];
 /**
  * @class NativeProcess
@@ -24,6 +25,7 @@ var types = require('./types'),
  */
 function NativeProcess() {
     NativeProcess.super_.call(this);
+    this.activities_ = { };
 }
 util.inherits(NativeProcess, types.SequentialProcess);
 
@@ -51,6 +53,10 @@ NativeProcess.prototype.load = function(file, done) {
     catch(e) {
         done(err);
     }
+};
+
+NativeProcess.prototype.activity = function(name, ctor) {
+    this.activities_[name] = ctor;
 };
 
 NativeProcess.prototype.execute = function(context, done) {
@@ -128,8 +134,21 @@ NativeActivity.prototype.next = function(done) {
             var sequence_id = nodes[0].nodeValue;
             var sequenceNode = this.node.parentNode.selectSingleNode(util.format("bpmn2:sequenceFlow[@id='%s']", sequence_id), DEFAULT_NS);
             var targetNode = this.node.parentNode.selectSingleNode(util.format("*[@id='%s']", sequenceNode.getAttribute('targetRef')), DEFAULT_NS);
-            var result = new NativeActivity(targetNode);
-            result.process = this.process;
+            var activityType = targetNode.getAttribute("drools:taskName"), result;
+            if (activityType) {
+                var ActivityCtor = this.process.activities_[activityType];
+                if (typeof ActivityCtor === 'function') {
+                    result = new ActivityCtor(targetNode);
+                    result.process = this.process;
+                }
+                else {
+                    return done(new Error('Unknown Activity Type'));
+                }
+            }
+            else {
+                result = new NativeActivity(targetNode);
+                result.process = this.process;
+            }
             done(null, result);
         }
         else {
