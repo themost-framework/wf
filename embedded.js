@@ -169,12 +169,11 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                     callback();
                 }
                 else {
-                    //ensure process status
-                    if (result.status !== types.ActivityExecutionResult.None) {
-                        callback();
-                        return;
-                    }
-
+                    // //ensure process status
+                    // if (result.status === types.ActivityExecutionResult.Succeeded) {
+                    //     callback();
+                    //     return;
+                    // }
                     var instance = result, template;
                     self.log('debug', 'Processing business process instance with ID [%s].', instance.id);
                     async.series([
