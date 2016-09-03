@@ -1,6 +1,6 @@
 {
   "name": "most-wf",
-  "version": "1.4.11",
+  "version": "1.8.0",
   "description": "Most Web Framework Business Process Services",
   "homepage": "http://themost.io/",
   "repository": {
@@ -30,7 +30,6 @@
   "dependencies": {
     "async": "0.9.0",
     "bpmn": "~0.2.0",
-    "most-web": "~1.7.19",
     "most-xml": "~0.3.4",
     "winston": "^1.0.2",
     "moment": "^2.10.2"

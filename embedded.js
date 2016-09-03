@@ -11,7 +11,6 @@
 var async = require('async'),
     path = require('path'),
     xml = require('most-xml'),
-    web = require('most-web'),
     util = require('util'),
     types = require('./types'),
     moment = require("moment");
@@ -154,8 +153,8 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
         bpmn = require('bpmn');
     try {
         callback = callback || function() {};
-        if (web.common.isNullOrUndefined(instance)) {
-            callback(); return;
+        if (typeof instance === 'undefined' || instance == null) {
+            return callback();
         }
         var processInstances = context.model('ProcessInstance'),
             processTemplates = context.model('ProcessTemplate');
@@ -165,7 +164,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                 callback(err);
             }
             else {
-                if (web.common.isNullOrUndefined(result)) {
+                if (typeof result === 'undefined' || result == null) {
                     callback();
                 }
                 else {
@@ -187,7 +186,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                 if (err) {
                                     cb(err);
                                 }
-                                else if (web.common.isNullOrUndefined(res)) {
+                                else if (typeof res === 'undefined' || res == null) {
                                     cb(new Error('The associated business process template cannot be found for instance with ID ' + result.id));
                                 }
                                 else {
@@ -213,7 +212,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                         if (err) {
                                             cb(err);
                                         }
-                                        else if (web.common.isNullOrUndefined(res)) {
+                                        else if (typeof res === 'undefined' || res == null) {
                                             cb(new Error('Instance object cannot be found'));
                                         }
                                         else {
@@ -235,7 +234,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                             xml.load(bpmnPath, function(err, bpmnDoc) {
                                 try {
                                     if (err) {
-                                        web.common.log(err);
+                                        self.log('error',err);
                                         cb(new Error('Error loading business process template XML for ' + template.name));
                                     }
                                     else {
@@ -379,7 +378,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                         }
                                                         done(data);
                                                     };
-                                                    web.current.unattended(function(context) {
+                                                    self.application.unattended(function(context) {
                                                         instanceProcess.instance = context.model(instance.additionalType || 'ProcessInstance').convert(instance);
                                                         instanceProcess.instance.status = types.ActivityExecutionResult.Started; //Started
                                                         instanceProcess.instance.save(context, function(err) {
@@ -470,7 +469,7 @@ function engine_timer(self) {
                     .prepare();
                 q.where('badExecutionCount').lowerThan(self.badExecutionTimes).and('executionDate').lowerOrEqual(new Date()).silent().select('id').take(10, function(err, result) {
                     if (err) {
-                        web.common.log(err);
+                        self.log('error', err);
                         context.finalize(resetWorking);
                     }
                     else if (result.length==0) {
@@ -483,13 +482,13 @@ function engine_timer(self) {
                             self.load(context, instance, function(err) {
                                 if (err) {
                                     self.log('error','An error occured while trying to load business process instance with ID ' + instance.id);
-                                    web.common.log(err);
+                                    self.log('error', err);
                                 }
                                 cb();
                             });
                         }, function(err) {
                             if (err)
-                                web.common.log(err);
+                                self.log('error', err);
                             context.finalize(resetWorking);
                         })
                     }
@@ -497,13 +496,13 @@ function engine_timer(self) {
                 });
             }
             catch (e) {
-                web.common.log(e);
+                self.log('error', e);
                 context.finalize(resetWorking);
             }
         });
     }
     catch(e) {
-        web.common.log(e);
+        self.log('error',e);
         resetWorking();
     }
 }
@@ -553,13 +552,7 @@ EmbeddedProcessInstanceClient.prototype.writeHistory = function(data, callback) 
 };
 
 var embedded = {
-    /**
-     * @constructs EmbeddedProcessEngine
-     */
     EmbeddedProcessEngine: EmbeddedProcessEngine,
-    /**
-     * @constructs EmbeddedProcessInstanceClient
-     */
     EmbeddedProcessInstanceClient: EmbeddedProcessInstanceClient
 };
 

@@ -214,21 +214,9 @@ function EndEventActivity() {
 util.inherits(EndEventActivity, NativeActivity);
 
 var native = {
-    /**
-     * @constructs NativeProcess
-     */
     NativeProcess: NativeProcess,
-    /**
-     * @constructs NativeActivity
-     */
     NativeActivity: NativeActivity,
-    /**
-     * @constructs StartEventActivity
-     */
     StartEventActivity: StartEventActivity,
-    /**
-     * @constructs EndEventActivity
-     */
     EndEventActivity: EndEventActivity
 };
 
