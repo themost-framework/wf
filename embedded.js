@@ -79,6 +79,11 @@ function EmbeddedProcessEngine(application) {
      * @type {boolean}
      */
     this.started = false;
+    /**
+     * Gets or sets the number of business processes to be executed on a single execution cycle
+     * @type {number}
+     */
+    this.maxProcesses = 10;
 
     this.logger = createLogger();
 }
@@ -467,7 +472,10 @@ function engine_timer(self) {
                     .or('status').equal(types.ActivityExecutionResult.Faulted)
                     .or('status').equal(types.ActivityExecutionResult.Paused)
                     .prepare();
-                q.where('badExecutionCount').lowerThan(self.badExecutionTimes).and('executionDate').lowerOrEqual(new Date()).silent().select('id').take(10, function(err, result) {
+                q.where('badExecutionCount').lowerThan(self.badExecutionTimes)
+                    .and('executionDate').lowerOrEqual(new Date()).silent()
+                    .orderBy('executionDate')
+                    .select('id').take(self.maxProcesses, function(err, result) {
                     if (err) {
                         self.log('error', err);
                         context.finalize(resetWorking);
