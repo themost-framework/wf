@@ -91,7 +91,7 @@ util.inherits(EmbeddedProcessEngine, types.BusinessProcessRuntime);
 
 EmbeddedProcessEngine.prototype.start = function() {
     try {
-        if (this.started == true)
+        if (this.started === true)
             return;
         /**
          * @private
@@ -480,7 +480,7 @@ function engine_timer(self) {
                         self.log('error', err);
                         context.finalize(resetWorking);
                     }
-                    else if (result.length==0) {
+                    else if (result.length===0) {
                         self.log('debug','There are no pending business process instances.');
                         context.finalize(resetWorking);
                     }

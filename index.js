@@ -8,16 +8,11 @@
  * Released under the BSD3-Clause license
  * Date: 2015-08-25
  */
-var async = require('async'),
-    embedded = require('./embedded'),
-    types = require('./types'),
-    native = require('./native');
+var embedded = require('./embedded');
+var types = require('./types');
+var native = require('./native');
 
-/**
- * @exports most-wf
- */
 var wf = { };
-
 /**
  * Creates a new instance of EmbeddedProcessEngine class
  * @param {HttpApplication} app - The target web application
