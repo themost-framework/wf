@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@themost/web": "^2.0.5",
-    "@themost/data": "^2.0.5"
+    "@themost/data": "^2.0.5",
     "@themost/sqlite": "^2.0.5",
     "@types/chai": "^4.1.1",
     "@types/mocha": "^2.2.46",
