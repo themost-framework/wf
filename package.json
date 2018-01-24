@@ -1,6 +1,6 @@
 {
-  "name": "most-wf",
-  "version": "1.8.5",
+  "name": "@themost/wf",
+  "version": "2.0.0",
   "description": "Most Web Framework Business Process Services",
   "homepage": "http://themost.io/",
   "repository": {
@@ -8,6 +8,7 @@
     "url": "https://github.com/kbarbounakis/most-wf.git"
   },
   "keywords": [
+    "@themost",
     "most-web",
     "most-wf",
     "bpmn",
@@ -23,11 +24,16 @@
     "email": "k.barbounakis@gmail.com"
   },
   "license": "BSD-3-Clause",
+  "peerDependencies": {
+    "@themost/web": "^2.0.5",
+    "@themost/data": "^2.0.5"
+  },
   "dependencies": {
+    "@themost/common": "^2.0.5",
+    "@themost/xml": "^2.0.5",
     "async": "0.9.0",
     "bpmn": "~0.2.0",
     "moment": "^2.10.2",
-    "most-xml": "~0.3.4",
     "winston": "^1.0.2"
   },
   "devDependencies": {
