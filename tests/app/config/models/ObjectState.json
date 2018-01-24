@@ -1,0 +1,78 @@
+{
+    "@id": "https://themost.io/models/ObjectState",
+    "name": "ObjectState",
+    "id": 6882220,
+    "title": "Object States",
+    "hidden": true,
+    "sealed": false,
+    "abstract": false,
+    "version": "2.0",
+    "caching": "always",
+    "fields": [
+        {
+            "@id": "https://themost.io/attributes/id",
+            "name": "id",
+            "title": "Id",
+            "type": "Integer",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "http://schema.org/alternateName",
+            "name": "alternateName",
+            "title": "Alternate Name",
+            "description": "An alias for the item.",
+            "type": "Text",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "title": "Name",
+            "description": "The name of the item.",
+            "type": "Text",
+            "nullable": false
+        }
+    ],
+    "constraints": [
+        {
+            "type": "unique",
+            "fields": [
+                "alternateName"
+            ]
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 1,
+            "type": "global",
+            "account": "*"
+        },
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ],
+    "seed": [
+        {
+            "id": 1,
+            "name": "Inserted",
+            "alternateName": "Inserted"
+        },
+        {
+            "id": 2,
+            "name": "Updated",
+            "alternateName": "Updated"
+        },
+        {
+            "id": 4,
+            "name": "Deleted",
+            "alternateName": "Deleted"
+        }
+    ]
+}

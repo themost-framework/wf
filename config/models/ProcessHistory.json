@@ -1,0 +1,115 @@
+{
+    "@id": "https://themost.io/models/ProcessHistory",
+    "name": "ProcessHistory",
+    "id": 1246683,
+    "title": "Business Process History",
+    "description": "Business process history holds the activity of a business process.",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "2.0",
+    "fields": [
+        {
+            "@id": "https://themost.io/attributes/id",
+            "name": "id",
+            "title": "Id",
+            "type": "Counter",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "http://schema.org/additionalType",
+            "name": "additionalType",
+            "title": "Additional Type",
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+            "type": "Text",
+            "nullable": false,
+            "value":"javascript:return this.model.name;"
+        },
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "title": "Name",
+            "description": "The name of the item.",
+            "type": "Text",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/description",
+            "name": "description",
+            "title": "Description",
+            "description": "A description of the item.",
+            "type": "Text"
+        },
+        {
+            "@id": "https://themost.io/attributes/scope",
+            "name": "scope",
+            "title": "Scope",
+            "description": "The scope of the item.",
+            "type": "Text",
+            "value": "javascript:return 'info';"
+        },
+        {
+            "@id": "https://themost.io/attributes/processStatus",
+            "name": "processStatus",
+            "title": "Effective Status",
+            "description": "The effective process status associated with this item.",
+            "type": "ProcessStatus"
+        },
+        {
+            "@id": "https://themost.io/attributes/processInstance",
+            "name": "processInstance",
+            "title": "Business Process Instance",
+            "description": "The business process instance where this item belongs.",
+            "type": "ProcessInstance"
+        },
+        {
+            "@id": "https://themost.io/attributes/dateCreated",
+            "name": "dateCreated",
+            "title": "Date Created",
+            "description": "The date and time when the item was created.",
+            "type": "DateTime",
+            "value": "javascript:return this.now();",
+            "readonly": true
+        },
+        {
+            "@id": "https://themost.io/attributes/dateModified",
+            "name": "dateModified",
+            "title": "Date Modified",
+            "description": "The date and time when the item was modified.",
+            "type": "DateTime",
+            "value": "javascript:return new Date();",
+            "calculation": "javascript:return this.now();",
+            "readonly": true
+        },
+        {
+            "@id": "https://themost.io/attributes/createdBy",
+            "name": "createdBy",
+            "title": "Created By",
+            "description": "Created by user.",
+            "type": "Integer",
+            "value": "javascript:return this.user();",
+            "readonly": true
+        },
+        {
+            "@id": "https://themost.io/attributes/modifiedBy",
+            "name": "modifiedBy",
+            "title": "Modified By",
+            "description": "Modified by user.",
+            "type": "Integer",
+            "calculation": "javascript:return this.user();",
+            "readonly": true
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ]
+}

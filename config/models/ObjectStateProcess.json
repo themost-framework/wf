@@ -1,0 +1,113 @@
+{
+    "@id": "https://themost.io/models/ObjectStateProcess",
+    "name": "ObjectStateProcess",
+    "id": 4665172,
+    "title": "Object State Processes",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "1.7",
+    "fields": [
+        {
+            "@id": "https://themost.io/attributes/id",
+            "name": "id",
+            "title": "Id",
+            "type": "Counter",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "https://themost.io/attributes/state",
+            "name": "state",
+            "title": "Target Object State",
+            "description": "Represents the state of the object which is suitable for the specified process template.",
+            "type": "ObjectState",
+            "nullable": false
+        },
+        {
+            "@id": "https://themost.io/attributes/enabled",
+            "name": "enabled",
+            "title": "Enabled",
+            "description": "Indicates whether this object state process is enabled or not.",
+            "type": "Boolean",
+            "nullable": false,
+            "value": "javascript:return true;"
+        },
+        {
+            "@id": "https://themost.io/attributes/previousFilter",
+            "name": "previousFilter",
+            "title": "Object Previous Filter",
+            "description": "A string which represents an filter which validates if an object meets the requirements for initializing the specified process template before data operation. This property is optional.",
+            "type": "Text"
+        },
+        {
+            "@id": "https://themost.io/attributes/filter",
+            "name": "filter",
+            "title": "Object Filter",
+            "description": "A string which represents an filter which validates if an object meets the requirements for initializing the specified process template. This property is optional.",
+            "type": "Text"
+        },
+        {
+            "@id": "https://themost.io/attributes/singleInstance",
+            "name": "singleInstance",
+            "title": "Single Instance",
+            "description": "A boolean which indicates whether this object state process is olny allowed if no other process of the same type is still running.",
+            "type": "Boolean",
+            "value": "javascript:return false;"
+        },
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "title": "Name",
+            "description": "A string which represents the title of the item.",
+            "type": "Text",
+            "nullable": false
+        },
+        {
+            "@id": "https://themost.io/attributes/model",
+            "name": "model",
+            "title": "Target Model",
+            "description": "Represents the model which is going to be associated with the specified process template.",
+            "type": "Text",
+            "nullable": false
+        },
+        {
+            "@id": "https://themost.io/attributes/template",
+            "name": "template",
+            "title": "Business Process Template",
+            "description": "The business process template associated with this item.",
+            "type": "ProcessTemplate",
+            "nullable": false,
+            "expandable": true
+        }
+    ],
+    "constraints": [
+        {
+            "type": "unique",
+            "description": "Only one process template is permitted for a model and a specific object state.",
+            "fields": [
+                "state",
+                "model",
+                "template"
+            ]
+        }
+    ],
+    "views": [],
+    "eventListeners": [],
+    "privileges": [
+        {
+            "mask": 1,
+            "type": "global",
+            "account": "*"
+        },
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ]
+}

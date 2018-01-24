@@ -1,0 +1,47 @@
+{
+    "@id": "https://themost.io/models/ObjectProcessInstance",
+    "name": "ObjectProcessInstance",
+    "id": 9465287,
+    "title": "Object Business Process Instances",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "inherits": "ProcessInstance",
+    "version": "2.0",
+    "fields": [
+        {
+            "@id": "https://themost.io/attributes/id",
+            "name": "id",
+            "title": "Id",
+            "type": "Integer",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "http://schema.org/additionalType",
+            "name": "additionalType",
+            "title": "Additional Type",
+            "description": "An additional type for the item.",
+            "type": "Text",
+            "value": "javascript:return this.model.name;"
+        },
+        {
+            "name": "objectURL",
+            "title": "Object URL",
+            "description": "A URL that represents the object associated with this process instance e.g. /Article/45",
+            "type": "Text",
+            "nullable": false
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ]
+}

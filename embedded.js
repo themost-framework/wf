@@ -1,26 +1,22 @@
 /**
- * MOST Web Framework
- * A JavaScript Web Framework
- * http://themost.io
+ * @license
+ * MOST Web Framework 2.0 Codename Blueshift
+ * Copyright (c) 2017, THEMOST LP All rights reserved
  *
- * Copyright (c) 2014, Kyriakos Barbounakis k.barbounakis@gmail.com, Anthi Oikonomou anthioikonomou@gmail.com
- *
- * Released under the BSD3-Clause license
- * Date: 2014-05-01
+ * Use of this source code is governed by an BSD-3-Clause license that can be
+ * found in the LICENSE file at https://themost.io/license
  */
-var async = require('async'),
-    path = require('path'),
-    xml = require('most-xml'),
-    util = require('util'),
-    types = require('./types'),
-    moment = require("moment");
+var async = require('async');
+var path = require('path');
+var xml = require('@themost/xml');
+var util = require('util');
+var types = require('./types');
+var moment = require("moment");
+var fs = require('fs');
 
 function createLogger() {
-    var winston = require("winston"),
-        /**
-         * @type {{mkdir:Function,mkdirSync}}
-         */
-        fs = require('fs');
+    var winston = require("winston");
+
     if (process.env.NODE_ENV==='development') {
         return new (winston.Logger)({
             transports: [
@@ -129,7 +125,7 @@ EmbeddedProcessEngine.prototype.log = function(level,message,p1,p2) {
 
 EmbeddedProcessEngine.prototype.stop = function() {
     try {
-        if (this.started == true)
+        if (this.started === true)
             return;
         if (this.intervalTimer) {
             clearInterval(this.intervalTimer);
@@ -234,7 +230,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                          */
                             function(cb) {
                             self.log('debug', 'Executing business process instance [%s].', instance.id);
-                            var bpmnPath = path.join(process.cwd(), template.url);
+                            var bpmnPath = self.application.mapExecutionPath(template.url);
                             self.log('debug', 'Loading business process instance [%s] XML.', instance.id);
                             xml.load(bpmnPath, function(err, bpmnDoc) {
                                 try {
@@ -559,12 +555,8 @@ EmbeddedProcessInstanceClient.prototype.writeHistory = function(data, callback) 
     }
 };
 
-var embedded = {
-    EmbeddedProcessEngine: EmbeddedProcessEngine,
-    EmbeddedProcessInstanceClient: EmbeddedProcessInstanceClient
-};
-
 
 if (typeof exports !== 'undefined') {
-    module.exports = embedded;
+    module.exports.EmbeddedProcessEngine = EmbeddedProcessEngine;
+    module.exports.EmbeddedProcessInstanceClient = EmbeddedProcessInstanceClient;
 }

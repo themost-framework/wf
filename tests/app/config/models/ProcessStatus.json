@@ -1,0 +1,96 @@
+{
+    "@id": "https://themost.io/models/ProcessStatus",
+    "name": "ProcessStatus",
+    "id": 9465287,
+    "title": "Business Process Status",
+    "description": "A business process status is the status of a business process e.g. Succeeded, Cancelled etc",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "2.0",
+    "caching": "always",
+    "fields": [
+        {
+            "@id": "https://themost.io/attributes/id",
+            "name": "id",
+            "title": "Id",
+            "type": "Primary",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "http://schema.org/alternateName",
+            "name": "alternateName",
+            "title": "Alternate Name",
+            "description": "An alias for the item.",
+            "type": "Text",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "title": "Name",
+            "description": "The name of the item.",
+            "type": "Text",
+            "nullable": false
+        }
+    ],
+    "constraints": [
+        {
+            "type": "unique",
+            "fields": [
+                "alternateName"
+            ]
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 1,
+            "type": "global",
+            "account": "*"
+        },
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ],
+    "seed": [
+        {
+            "name": "None",
+            "alternateName": "None"
+        },
+        {
+            "name": "Succeeded",
+            "alternateName": "Succeeded"
+        },
+        {
+            "name": "Canceled",
+            "alternateName": "Canceled"
+        },
+        {
+            "name": "Compensated",
+            "alternateName": "Compensated"
+        },
+        {
+            "name": "Faulted",
+            "alternateName": "Faulted"
+        },
+        {
+            "name": "Uninitialized",
+            "alternateName": "Uninitialized"
+        },
+        {
+            "name": "Started",
+            "alternateName": "Started"
+        },
+        {
+            "name": "Paused",
+            "alternateName": "Paused"
+        }
+    ]
+}

@@ -1,32 +1,22 @@
 /**
- * MOST Web Framework
- * A JavaScript Web Framework
- * http://themost.io
+ * @license
+ * MOST Web Framework 2.0 Codename Blueshift
+ * Copyright (c) 2017, THEMOST LP All rights reserved
  *
- * Copyright (c) 2014, Kyriakos Barbounakis k.barbounakis@gmail.com, Anthi Oikonomou anthioikonomou@gmail.com
- *
- * Released under the BSD3-Clause license
- * Date: 2015-08-25
+ * Use of this source code is governed by an BSD-3-Clause license that can be
+ * found in the LICENSE file at https://themost.io/license
  */
 var embedded = require('./embedded');
 var types = require('./types');
 var native = require('./native');
 
-var wf = { };
-/**
- * Creates a new instance of EmbeddedProcessEngine class
- * @param {HttpApplication} app - The target web application
- * @returns {EmbeddedProcessEngine}
- */
-wf.createEmbeddedEngine = function(app) {
-    return new embedded.EmbeddedProcessEngine(app);
-};
-wf.types = types;
-wf.NativeProcess = native.NativeProcess;
-wf.NativeActivity = native.NativeActivity;
-wf.StartEventActivity = native.StartEventActivity;
-wf.EndEventActivity = native.EndEventActivity;
-wf.EmbeddedProcessEngine = embedded.EmbeddedProcessEngine;
-wf.EmbeddedProcessInstanceClient= embedded.EmbeddedProcessInstanceClient;
+if (typeof exports !== 'undefined') {
+    module.exports.types = types;
+    module.exports.NativeProcess = native.NativeProcess;
+    module.exports.NativeActivity = native.NativeActivity;
+    module.exports.StartEventActivity = native.StartEventActivity;
+    module.exports.EndEventActivity = native.EndEventActivity;
+    module.exports.EmbeddedProcessEngine = embedded.EmbeddedProcessEngine;
+    module.exports.EmbeddedProcessInstanceClient= embedded.EmbeddedProcessInstanceClient;
+}
 
-module.exports = wf;

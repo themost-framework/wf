@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 import path from 'path';
-import {XDocument} from '@themost/xml';
+import {XDocument} from '@themost/xml/index';
 describe('common tests', () => {
    it('should open bpmn xml file', (done) => {
        XDocument.load(path.resolve(__dirname, './diagram_1.bpmn'), (err, document) => {

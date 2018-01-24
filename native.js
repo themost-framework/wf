@@ -11,7 +11,7 @@
 
 var types = require('./types'),
     util = require('util'),
-    xml = require('most-xml'),
+    xml = require('@themost/xml'),
     DEFAULT_NS = [
         { prefix:'bpmn2', uri:'http://www.omg.org/spec/BPMN/20100524/MODEL' },
         { prefix:'most', uri:'http://www.themost.io/schemas/bmpn' },

@@ -1,0 +1,103 @@
+{
+    "@id": "https://themost.io/models/ProcessInstance",
+    "name": "ProcessInstance",
+    "id": 7400415,
+    "description": "A business process or business method is a collection of related, structured activities or tasks that produce a specific service or product.",
+    "title": "Business Process Instances",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "2.0",
+    "inherits": "Thing",
+    "fields": [
+        {
+            "name": "id",
+            "title": "Id",
+            "type": "Counter",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "http://schema.org/additionalType",
+            "name": "additionalType",
+            "title": "Additional Type",
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+            "type": "Text",
+            "nullable": false,
+            "value":"javascript:return this.model.name;"
+        },
+        {
+            "@id": "https://themost.io/attributes/status",
+            "name": "status",
+            "title": "Status",
+            "description": "The status of the item.",
+            "type": "ProcessStatus",
+            "nullable": false,
+            "value": "javascript:return { alternateName: 'None' };",
+            "expandable": true
+        },
+        {
+            "@id": "https://themost.io/attributes/template",
+            "name": "template",
+            "title": "Process Template",
+            "description": "The business process template associated with this item.",
+            "type": "ProcessTemplate",
+            "nullable": false,
+            "expandable": true
+        },
+        {
+            "@id": "https://themost.io/attributes/metadata",
+            "name": "metadata",
+            "title": "Data",
+            "description": "Metadata associated with the process. Normally a JSON formatted object which contains the input data of this business process instance.",
+            "type": "Text"
+        },
+        {
+            "@id": "https://themost.io/attributes/executionDate",
+            "name": "executionDate",
+            "title": "Execution Date",
+            "description": "The date and time when this will be executed.",
+            "type": "DateTime",
+            "value": "javascript:return this.now();"
+        },
+        {
+            "@id": "https://themost.io/attributes/lastExecutionTime",
+            "name": "lastExecutionTime",
+            "title": "Last Execution Time",
+            "description": "The date and time when this process was last executed.",
+            "type": "DateTime"
+        },
+        {
+            "@id": "https://themost.io/attributes/badExecutionCount",
+            "name": "badExecutionCount",
+            "title": "Bad Executions",
+            "description": "The number of times the process failed to complete.",
+            "type": "Integer",
+            "value": "javascript:return 0;"
+        },
+        {
+            "@id": "https://themost.io/attributes/source",
+            "name": "source",
+            "title": "Source",
+            "description": "The XML source associated with this business process. This XML source is going to be used for process persistency.",
+            "type": "Text"
+        }
+    ],
+    "eventListeners": [
+        {
+            "name": "Process Instance Listener",
+            "type": "/app/controllers/process-instance-listener.js"
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ]
+}

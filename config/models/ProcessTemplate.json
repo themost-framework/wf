@@ -1,0 +1,77 @@
+{
+    "@id": "https://themost.io/models/ProcessTemplate",
+    "name": "ProcessTemplate",
+    "id": 4860774,
+    "description": "A business process template defines a set of abstract business process definition elements for specification of executable business processes.",
+    "title": "Business Process Templates",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "2.0",
+    "inherits": "Thing",
+    "fields": [
+        {
+            "@id": "https://themost.io/attributes/id",
+            "name": "id",
+            "title": "ID",
+            "description": "The identifier of the item.",
+            "type": "Integer",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "http://schema.org/additionalType",
+            "name": "additionalType",
+            "title": "Additional Type",
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+            "type": "Text",
+            "nullable": false,
+            "value":"javascript:return this.model.name;"
+        },
+        {
+            "@id": "http://schema.org/alternateName",
+            "name": "alternateName",
+            "title": "Alternate Name",
+            "description": "An alias for the item.",
+            "type": "Text",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "title": "Name",
+            "description": "The name of the item.",
+            "type": "Text",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/url",
+            "name": "url",
+            "title": "Url",
+            "description": "URL of the item.",
+            "type": "URL",
+            "nullable": false
+        }
+    ],
+    "constraints": [
+        {
+            "type": "unique",
+            "fields": [
+                "alternateName"
+            ]
+        }
+    ],
+    "eventListeners": [
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ]
+}
