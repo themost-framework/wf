@@ -1,6 +1,7 @@
 {
   "sourceMap": true,
   "presets": [ "env" ],
+  "ignore": "node_modules",
   "plugins": [
     ["transform-es2015-modules-commonjs-simple", {
       "noMangle":true,
