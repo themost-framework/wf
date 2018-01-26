@@ -13,6 +13,26 @@ var util = require('util');
 var types = require('./types');
 var moment = require("moment");
 var fs = require('fs');
+var _ = require('lodash');
+var bpmn = require('bpmn');
+var handler = require('bpmn/lib/handler');
+/**
+ * @summary Change handler.getHandlerFileName() in order to return module path without extension.
+ * This is a critical issue if you are trying to load an ES6 script e.g. diagram.es6 with babel-node  instead of diagram.js
+ * @param {string} bpmnFilePath
+ */
+handler.getHandlerFileName = function(bpmnFilePath) {
+    return bpmnFilePath.replace(new RegExp(path.extname(bpmnFilePath) + "$","g"),"");
+};
+/**
+ * @summary Change handler.getHandlerFromFile() in order to use handler.getHandlerFileName().
+ * This is a critical issue if you are trying to load an ES6 script with babel-node e.g. diagram.es6 instead of diagram.js
+ * @param {string} bpmnFilePath
+ */
+handler.getHandlerFromFile = function (bpmnFilePath) {
+    var handlerFilePath = handler.getHandlerFileName(bpmnFilePath);
+    return require(handlerFilePath);
+};
 
 function createLogger() {
     var winston = require("winston");
@@ -147,11 +167,10 @@ function log() {
  * Loads and executes a process instance.
  * @param {HttpContext} context
  * @param {*} instance
- * @param {function(Error=)} callback
+ * @param {Function} callback
  */
 EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
-    var self = this,
-        bpmn = require('bpmn');
+    var self = this;
     try {
         callback = callback || function() {};
         if (typeof instance === 'undefined' || instance == null) {
@@ -223,6 +242,9 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                     })
                                 }
                             }
+                            else {
+                                return cb();
+                            }
                         },
                         /**
                          * Executes instance
@@ -285,7 +307,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                     };
 
                                                     instanceProcess.meta = function(name, value) {
-                                                        var meta = JSON.parse(this.instance['metadata']) || { };
+                                                        var meta = _.isNil(this.instance.metadata) ? { } : JSON.parse(this.instance.metadata);
                                                         if (typeof value === 'undefined') {
                                                             return meta[name];
                                                         }
@@ -300,12 +322,12 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                         var processDefinition = this.getProcessDefinition(),
                                                             currentFlowObject = processDefinition.flowObjects.find(function(x) { return x.name === currentFlowObjectName; });
                                                         //save current executing flow object
-                                                        var context = instanceProcess.instance.context,
-                                                            meta = JSON.parse(instanceProcess.instance['metadata']) || { };
+                                                        var context = instanceProcess.instance.context;
+                                                        var meta = _.isNil(instanceProcess.instance.metadata) ? { } : JSON.parse(instanceProcess.instance.metadata);
                                                         meta.state = meta.state || { };
                                                         meta.state.lastFlowObject = currentFlowObject.bpmnId;
                                                         instanceProcess.instance['metadata'] = JSON.stringify(meta);
-                                                        instanceProcess.instance.save(context, function(err) {
+                                                        instanceProcess.instance.silent().save(context, function(err) {
                                                             if (err) {
                                                                 done(err);
                                                             }
@@ -350,7 +372,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                                     }
 
                                                                 }
-                                                                $this.instance.save($context, function(err) {
+                                                                $this.instance.silent().save($context, function(err) {
                                                                     //and finalize context
                                                                     $context.finalize(function() {
                                                                         done(data);
@@ -365,7 +387,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                              */
                                                             $context = $this.instance.context;
                                                             $this.instance.status = types.ActivityExecutionResult.Faulted; //Faulted
-                                                            $this.instance.save($context, function(err) {
+                                                            $this.instance.silent().save($context, function(err) {
                                                                 //get error boundary event
                                                                 var boundaryFlowObject = processDefinition.flowObjects.find(function(x) { return (x.isBoundaryEvent) && (x.attachedToRef === currentFlowObject.bpmnId) });
                                                                 if (boundaryFlowObject) {
@@ -382,7 +404,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                     self.application.unattended(function(context) {
                                                         instanceProcess.instance = context.model(instance.additionalType || 'ProcessInstance').convert(instance);
                                                         instanceProcess.instance.status = types.ActivityExecutionResult.Started; //Started
-                                                        instanceProcess.instance.save(context, function(err) {
+                                                        instanceProcess.instance.silent().save(context, function(err) {
                                                            if (err) {
                                                                context.finalize(function() {
                                                                    cb(err);
@@ -398,7 +420,7 @@ EmbeddedProcessEngine.prototype.load = function(context, instance, callback) {
                                                                    instanceProcess.instance.target(function(err, result) {
                                                                       if (err) {
                                                                           instanceProcess.instance.status = types.ActivityExecutionResult.Faulted;
-                                                                          instanceProcess.instance.save(context, function(err) {
+                                                                          instanceProcess.instance.silent().save(context, function(err) {
                                                                               if (err) {
                                                                                   context.finalize(function () {
                                                                                       cb(err);
@@ -526,7 +548,7 @@ EmbeddedProcessInstanceClient.prototype.setStatus = function(status, callback) {
     var self = this;
     try {
         var item = { id:self.instance.id, status:status };
-        self.context.model('ProcessInstance').save(item, function(err) {
+        self.context.model('ProcessInstance').silent().save(item, function(err) {
             if (err) {
                 callback(err);
             }

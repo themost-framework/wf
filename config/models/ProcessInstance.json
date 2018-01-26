@@ -84,10 +84,6 @@
         }
     ],
     "eventListeners": [
-        {
-            "name": "Process Instance Listener",
-            "type": "/app/controllers/process-instance-listener.js"
-        }
     ],
     "privileges": [
         {

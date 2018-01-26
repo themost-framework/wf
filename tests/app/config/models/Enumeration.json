@@ -1,0 +1,38 @@
+{
+    "id": 5620881,
+    "@id": "http://schema.org/Enumeration",
+    "name": "Enumeration",
+    "title": "Enumeration",
+    "description": "Lists or enumerations—for example, a list of cuisines or music genres, etc.",
+    "hidden": false,
+    "sealed": false,
+    "inherits": "Intangible",
+    "fields": [
+        {
+            "name": "id",
+            "title": "ID",
+            "description": "The identifier of the item.",
+            "type": "Integer",
+            "nullable": false,
+            "primary": true
+        },
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/supersededBy",
+            "name": "supersededBy",
+            "title": "Superseded By",
+            "description": "Relates a term (i.e. a property, class or enumeration) to one that supersedes it.",
+            "type": "Enumeration"
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ]
+}

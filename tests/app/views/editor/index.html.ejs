@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <title>BPMN Editor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/node_modules/bpmn-js/dist/assets/diagram-js.css">
+    <link rel="stylesheet" href="/node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn.css">
+    <link rel="stylesheet" href="/css/editor.css">
+</head>
+<body>
+        <nav class="navbar navbar-toggleable-lg navbar-primary navbar-inverse bg-primary">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Business Process Editor</a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            File
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Save</a>
+                            <a class="dropdown-item" href="#">Save as ...</a>
+                            <a class="dropdown-item" href="#">Properties ...</a>
+                            <a class="dropdown-item" href="#">Print ...</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+<!-- BPMN diagram container -->
+<div class="modeler">
+    <div id="canvas"></div>
+    <div id="properties"></div>
+</div>
+<!-- replace CDN url with local bpmn-js path -->
+<script src="/node_modules/bpmn-js/dist/bpmn-viewer.development.js"></script>
+<script src="/node_modules/bpmn-js/dist/bpmn-modeler.development.js"></script>
+<script>
+    (function() {
+        // load bpmn20xml from external resource or embed it into the page
+        var newDiagram = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+            '<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn">\n' +
+            '  <bpmn2:process id="Process_1" isExecutable="false">\n' +
+            '    <bpmn2:startEvent id="StartEvent_1"/>\n' +
+            '  </bpmn2:process>\n' +
+            '  <bpmndi:BPMNDiagram id="BPMNDiagram_1">\n' +
+            '    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">\n' +
+            '      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">\n' +
+            '        <dc:Bounds height="36.0" width="36.0" x="412.0" y="240.0"/>\n' +
+            '      </bpmndi:BPMNShape>\n' +
+            '    </bpmndi:BPMNPlane>\n' +
+            '  </bpmndi:BPMNDiagram>\n' +
+            '</bpmn2:definitions>';
+        // create viewer
+        var bpmnViewer = new BpmnJS({ container: '#canvas' });
+        // import diagram
+        bpmnViewer.importXML(newDiagram, function(err) {
+            if (err) {
+                alert('could not import BPMN 2.0 diagram');
+            }
+        });
+    })();
+</script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.js"></script>
+</body>
+</html>

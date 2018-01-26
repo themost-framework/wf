@@ -1,0 +1,12 @@
+[
+    { "url":"/", "controller":"root", "action":"index" },
+    { "url":"/api/?", "controller":"service", "action":"index", "format":"json" },
+    { "url":"/api/\\$metadata/?", "controller":"service", "action":"metadata", "format":"json" },
+    { "url":"/api/:entitySet/?", "controller":"data", "action":"index", "format":"json" },
+    { "url":"/api/:entitySet/schema", "controller":"data", "action":"schema", "format":"html" },
+    { "url":"/api/:entitySet/:id/?", "controller":"data", "action":"edit", "format":"json" },
+    { "url":"/api/:entitySet/:id/print/:report.pdf", "controller":"data", "action":"print", "format":"pdf" },
+    { "url":"/api/:entitySet/:id/:association/?", "controller":"data", "action":"association", "format":"json" },
+    { "url":"/:controller/?", "action":"index" },
+    { "url":"/:controller/:action/?" }
+]

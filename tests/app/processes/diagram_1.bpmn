@@ -9,7 +9,7 @@
       <bpmn:incoming>SequenceFlow_0c3l0e0</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0c3l0e0" sourceRef="Task_014059i" targetRef="EndEvent_09nk3so" />
-    <bpmn:scriptTask id="Task_014059i" name="User Task" camunda:resource="">
+    <bpmn:userTask id="Task_014059i" name="User Task">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:outputParameter name="Message" />
@@ -17,7 +17,7 @@
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_125kjoa</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0c3l0e0</bpmn:outgoing>
-    </bpmn:scriptTask>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -49,7 +49,7 @@
           <dc:Bounds x="649" y="179" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ScriptTask_0imtcmy_di" bpmnElement="Task_014059i">
+      <bpmndi:BPMNShape id="UserTask_11ffq0x_di" bpmnElement="Task_014059i">
         <dc:Bounds x="447" y="145" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

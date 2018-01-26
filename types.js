@@ -548,7 +548,7 @@ function BusinessProcessRuntime() {
 }
 /**
  * Starts the current business process engine.
- * @param {function(Error=)} done
+ * @param {Function} done
  */
 BusinessProcessRuntime.prototype.start = function(done) {
     //
@@ -556,7 +556,7 @@ BusinessProcessRuntime.prototype.start = function(done) {
 
 /**
  * Stops the current business process engine.
- * @param {function(Error=)} done
+ * @param {Function} done
  */
 BusinessProcessRuntime.prototype.stop = function(done) {
     //
@@ -566,7 +566,7 @@ BusinessProcessRuntime.prototype.stop = function(done) {
  * Loads and executes a process instance against this business process engine.
  * @param {*} context
  * @param {*} instance
- * @param {function(Error=)} done
+ * @param {Function} done
  */
 BusinessProcessRuntime.prototype.load = function(context, instance, done) {
     //
@@ -576,7 +576,7 @@ BusinessProcessRuntime.prototype.load = function(context, instance, done) {
  * Unloads and executes a process instance from the business process engine.
  * @param {*} context
  * @param {*} instance
- * @param {function(Error=)} done
+ * @param {Function<Error?>} done
  */
 BusinessProcessRuntime.prototype.unload = function(context, instance, done) {
     //

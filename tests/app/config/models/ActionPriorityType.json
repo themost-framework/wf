@@ -1,0 +1,100 @@
+{
+  "@id": "https://themost.io/schema/ActionPriorityType",
+  "name": "ActionPriorityType",
+  "id": 3026372,
+  "title": "Action Priority",
+  "description":"An action is a conceptual entity representing the priority of a action (Zero, Low, Medium, High, Extreme etc).",
+  "hidden": false,
+  "sealed": false,
+  "abstract": false,
+  "inherits": "Enumeration",
+  "version": "1.2",
+  "fields": [
+    {
+      "@id": "https://themost.io/schemas/id",
+      "name": "id",
+      "title": "Id",
+      "type": "Counter",
+      "nullable": false,
+      "primary": true
+    },
+    {
+      "@id": "http://schema.org/schemas/level",
+      "name": "level",
+      "title": "Level",
+      "description": "A number which represents the level of this priority.",
+      "type": "Integer",
+      "value": "javascript:return 0;"
+    },
+    {
+      "@id": "http://schema.org/additionalType",
+      "name": "additionalType",
+      "value":"javascript:return this.model.name;"
+    },
+    {
+      "@id": "http://schema.org/alternateName",
+      "name": "alternateName",
+      "nullable": false
+    }
+  ],
+  "constraints": [
+    {
+      "type": "unique",
+      "fields": [
+        "alternateName"
+      ]
+    }
+  ],"seed": [
+  {
+    "name": "Zero",
+    "alternateName": "Zero",
+    "description": "A task with no priority.",
+    "url": "https://themost.io/schemas/Zero",
+    "level":0
+  },
+  {
+    "name": "Low",
+    "alternateName": "Low",
+    "description": "A task with low priority.",
+    "url": "https://themost.io/schemas/Low",
+    "level":4
+  },
+  {
+    "name": "Medium",
+    "alternateName": "Medium",
+    "description": "A task with medium priority.",
+    "url": "https://themost.io/schemas/Medium",
+    "level":256
+  },
+  {
+    "name": "High",
+    "alternateName": "High",
+    "description": "A task with high priority.",
+    "url": "https://themost.io/schemas/High",
+    "level":2048
+  },
+  {
+    "name": "Extreme",
+    "alternateName": "Extreme",
+    "description": "A task with extremely high priority.",
+    "url": "https://themost.io/schemas/Extreme",
+    "level":65536
+  }
+],
+  "privileges": [
+    {
+      "mask": 15,
+      "type": "global",
+      "account": "Administrators"
+    },
+    {
+      "mask": 1,
+      "type": "global",
+      "account": "*"
+    },
+    {
+      "mask": 15,
+      "type": "global"
+    }
+  ]
+}

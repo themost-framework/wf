@@ -6,14 +6,11 @@ describe('test engine', function () {
      * @type HttpApplication
      */
     let app;
-    /**
-     * @type EmbeddedProcessEngine
-     */
-    let engine;
     before((done) => {
         try {
             app = new HttpApplication(path.resolve(process.cwd(), './tests/app/'));
-            engine = new EmbeddedProcessEngine(app);
+            //use process engine
+            app.useService(EmbeddedProcessEngine);
             return done();
         }
         catch(err) {
@@ -23,14 +20,14 @@ describe('test engine', function () {
 
     it('should get process instance template', function(done) {
         try {
-            engine.application.execute((context)=> {
+            app.execute((context)=> {
                 context.model('ProcessTemplate').where('alternateName').equal('diagram_1').silent().getItem().then((processTemplate) => {
                     if (typeof processTemplate === 'undefined') {
                         //add process template
                         return context.model('ProcessTemplate').silent().save({
                             "name": "Test Diagram #1",
                             "alternateName": "diagram_1",
-                            "url":"./tests/app/processes/diagram_1.bpmn"
+                            "url":"./processes/diagram_1.bpmn"
                         }).then(()=> {
                             context.finalize(()=> {
                                 return done();
@@ -50,14 +47,45 @@ describe('test engine', function () {
         catch(err) {
             return done(err);
         }
+    });
 
+    it('should add process instance', function(done) {
+        app.execute((context)=> {
+            context.model('ProcessInstance').where('sameAs').equal('/test-instance/diagram_1').silent().getItem().then((instance)=> {
+                if (typeof instance === 'undefined') {
+                    instance = {
+                        "template": {
+                            "alternateName": "diagram_1"
+                        },
+                        "sameAs":"/test-instance/diagram_1",
+                        "executionDate": new Date(),
+                        "status": {
+                            "alternateName": "None"
+                        },
+                    };
+                }
+                else {
+                    /*
+                    instance.status = {
+                        "alternateName": "None"
+                    };
+                    */
+                }
+                return context.model('ProcessInstance').silent().save(instance).then(()=> done());
+            }).catch((err)=> done(err));
+        });
     });
 
     it('should load bpmn process', function(done) {
         app.execute((context) => {
-            context.finalize(()=> {
-                return done();
-            });
+            context.model('ProcessInstance').where('sameAs').equal('/test-instance/diagram_1').silent().getItem().then((instance)=> {
+                if (typeof instance === 'undefined') {
+                    return done(new Error('Process instance not found'));
+                }
+                app.getService(EmbeddedProcessEngine).load(context, instance, (err)=> {
+                    return done(err);
+                });
+            }).catch((err)=> done(err));
         });
     });
 });

@@ -1,0 +1,145 @@
+{
+  "id": 2095565,
+  "@id": "http://schema.org/Action",
+  "name": "Action",
+  "title": "Action",
+  "description": "An action performed by a direct agent and indirect participants upon a direct object. Optionally happens at a location with the help of an inanimate instrument. The execution of the action may produce a result. Specific action sub-type documentation specifies the exact expectation of each argument/role.</p>\n<p>See also <a href=\"http://blog.schema.org/2014/04/announcing-schemaorg-actions.html\">blog post</a> and <a href=\"http://schema.org/docs/actions.html\">Actions overview document</a>.",
+  "hidden": false,
+  "sealed": false,
+  "inherits": "Thing",
+  "version": "1.2",
+  "fields": [
+    {
+      "@id": "https://themost.io/schemas/id",
+      "name": "id",
+      "title": "ID",
+      "description": "The identifier of the item.",
+      "type": "Integer",
+      "nullable": false,
+      "primary": true
+    },
+    {
+      "@id": "http://schema.org/additionalType",
+      "name": "additionalType",
+      "value":"javascript:return this.model.name;"
+    },
+    {
+      "@id": "https://themost.io/schemas/ancestor",
+      "name": "ancestor",
+      "title": "Ancestor",
+      "description": "An action from which this action is descended. Typically, the parent action of an action.",
+      "type": "Action"
+    },
+    {
+      "@id": "http://schema.org/result",
+      "name": "result",
+      "title": "Result",
+      "description": "The result produced in the action. e.g. John wrote <em>a book</em>.",
+      "type": "Thing"
+    },
+    {
+      "@id": "http://schema.org/startTime",
+      "name": "startTime",
+      "title": "Start Time",
+      "description": "The startTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to start. For actions that span a period of time, when the action was performed. e.g. John wrote a book from <em>January</em> to December.</p>\n<p>Note that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
+      "type": "DateTime"
+    },
+    {
+      "@id": "http://schema.org/actionStatus",
+      "name": "actionStatus",
+      "title": "Action Status",
+      "description": "Indicates the current disposition of the Action.",
+      "type": "ActionStatusType"
+    },
+    {
+      "@id": "http://schema.org/target",
+      "name": "target",
+      "title": "Target",
+      "description": "Indicates a target EntryPoint for an Action.",
+      "type": "EntryPoint"
+    },
+    {
+      "@id": "http://schema.org/agent",
+      "name": "agent",
+      "title": "Agent",
+      "description": "The direct performer or driver of the action. e.g. <em>John</em> wrote a book.",
+      "type": "Thing"
+    },
+    {
+      "@id": "http://schema.org/endTime",
+      "name": "endTime",
+      "title": "End Time",
+      "description": "The endTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to end. For actions that span a period of time, when the action was performed. e.g. John wrote a book from January to <em>December</em>.</p>\n<p>Note that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
+      "type": "DateTime"
+    },
+    {
+      "@id": "https://themost.io/schemas/participants",
+      "name": "participants",
+      "title": "Participants",
+      "description": "Other co-agents that participated in the action indirectly. e.g. John wrote a book with <em>Steve</em>.",
+      "type": "Thing",
+      "many": true
+    },
+    {
+      "@id": "http://schema.org/instrument",
+      "name": "instrument",
+      "title": "Instrument",
+      "description": "The object that helped the agent perform the action. e.g. John wrote a book with <em>a pen</em>.",
+      "type": "Thing"
+    },
+    {
+      "@id": "http://schema.org/object",
+      "name": "object",
+      "title": "Object",
+      "description": "The object upon the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). e.g. John read <em>a book</em>.",
+      "type": "Thing"
+    },
+    {
+      "@id": "http://schema.org/error",
+      "name": "error",
+      "title": "Error",
+      "description": "For failed actions, more information on the cause of the failure.",
+      "type": "Thing"
+    },
+    {
+      "@id": "http://schema.org/location",
+      "name": "location",
+      "title": "Location",
+      "description": "The location of for example where the event is happening, an organization is located, or where an action takes place.",
+      "type": "Place"
+    },
+    {
+      "@id": "http://schema.org/schemas/dueDate",
+      "name": "dueDate",
+      "title": "Due date",
+      "description": "The date and time when the action must end.",
+      "type": "DateTime"
+    },
+    {
+      "@id": "http://schema.org/schemas/owner",
+      "name": "owner",
+      "title": "Owner",
+      "description": "The owner is a person, organization or account responsible for seeing the task through to completion.",
+      "type": "Thing"
+    },
+    {
+      "@id": "http://schema.org/schemas/priority",
+      "name": "priority",
+      "title": "Priority",
+      "description": "The priority of this task (Low, Normal High etc).",
+      "type": "ActionPriorityType",
+      "value": "javascript:return { alternateName: 'Medium' };"
+    }
+  ],
+  "privileges": [
+    {
+      "mask": 15,
+      "type": "global",
+      "account": "Administrators"
+    },
+    {
+      "mask": 15,
+      "type": "global"
+    }
+  ]
+}
