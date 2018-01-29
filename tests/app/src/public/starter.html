@@ -9,39 +9,34 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="/node_modules/bpmn-js/dist/assets/diagram-js.css">
     <link rel="stylesheet" href="/node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn.css">
-    <link rel="stylesheet" href="/css/editor.css">
 </head>
 <body>
-        <nav class="navbar navbar-toggleable-lg navbar-primary navbar-inverse bg-primary">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="#">Business Process Editor</a>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            File
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Save</a>
-                            <a class="dropdown-item" href="#">Save as ...</a>
-                            <a class="dropdown-item" href="#">Properties ...</a>
-                            <a class="dropdown-item" href="#">Print ...</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
-                    </li>
+<nav class="navbar navbar-toggleable-lg navbar-primary navbar-inverse bg-primary">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Business Process Editor</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    File
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Save</a>
+                    <a class="dropdown-item" href="#">Save as ...</a>
+                    <a class="dropdown-item" href="#">Properties ...</a>
+                    <a class="dropdown-item" href="#">Print ...</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Settings</a>
+            </li>
 
-                </ul>
-            </div>
-        </nav>
-<!-- BPMN diagram container -->
-<div class="modeler">
-    <div id="canvas"></div>
-    <div id="properties"></div>
-</div>
+        </ul>
+    </div>
+</nav>
+<editor></editor>
 <!-- replace CDN url with local bpmn-js path -->
 <script src="/node_modules/bpmn-js/dist/bpmn-viewer.development.js"></script>
 <script src="/node_modules/bpmn-js/dist/bpmn-modeler.development.js"></script>

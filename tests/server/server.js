@@ -1,10 +1,10 @@
 import {HttpApplication} from '@themost/web/app';
 import path from 'path';
-import {EmbeddedProcessEngine} from '../embedded';
-const app = new HttpApplication(path.resolve(__dirname, './app'));
+import {EmbeddedProcessEngine} from '../../embedded';
+const app = new HttpApplication(path.resolve(__dirname));
 import {ODataModelBuilderConfiguration} from '@themost/web/odata';
 //use static files
-app.useStaticContent(path.resolve(__dirname, './app/public'));
+app.useStaticContent(path.resolve(__dirname, './public'));
 
 //use EmbeddedProcessEngine
 app.useService(EmbeddedProcessEngine);

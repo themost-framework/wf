@@ -1,6 +1,10 @@
 {
+    "rewrite" : [
+      { "src":"/editor/", "dst":"/editor/index.html" }
+    ],
     "handlers": [
-        { "name":"node-modules", "type":"./handlers/node-modules" }
+        { "name":"rewrite", "type":"/handlers/url-rewrite-handler" },
+        { "name":"node-modules", "type":"@themost/web/handlers/node-modules" }
     ],
     "engines": [
         { "name": "EJS View Engine", "extension": "ejs", "type": "./engines/ejs" },
@@ -16,7 +20,7 @@
         {
             "name": "local-db", "invariantName": "sqlite", "default": true,
             "options": {
-                "database": "./tests/app/db/local.db"
+                "database": "./tests/db/local.db"
             }
         }
     ],
@@ -112,6 +116,14 @@
         {
             "extension": ".csv",
             "type": "application/csv"
+        },
+        {
+            "extension": ".es6",
+            "type": "application/javascript"
+        },
+        {
+            "extension": ".bpmn",
+            "type": "text/xml"
         }
     ]
 }
