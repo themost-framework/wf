@@ -1,40 +1,42 @@
 {
-  "name": "most-wf",
+  "name": "@themost/wf",
   "version": "1.8.1",
   "description": "Most Web Framework Business Process Services",
   "homepage": "http://themost.io/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kbarbounakis/most-wf.git"
+    "url": "https://github.com/themost-framework/wf.git"
   },
   "keywords": [
-    "most-web",
-    "most-wf",
+    "@themost",
+    "wf",
     "bpmn",
     "bpmn2",
-    "web",
     "framework",
-    "workflows",
-    "services",
-    "business processes"
+    "workflow",
+    "service",
+    "business process"
   ],
-  "author": {
-    "name": "Kyriakos Barbounakis",
-    "email": "k.barbounakis@gmail.com"
-  },
   "licenses": [
     {
       "type": "BSD-3 Clause"
     }
   ],
-  "dependencies": {
-    "async": "0.9.0",
-    "bpmn": "~0.2.0",
-    "most-xml": "~0.3.4",
-    "winston": "^1.0.2",
-    "moment": "^2.10.2"
+  "peerDependencies": {
+    "@themost/xml": "^2.5.2",
+    "@themost/common": "2.7.5"
   },
-  "devDependencies": {},
+  "dependencies": {
+    "async": "^2.6.4",
+    "bpmn": "^0.2.2",
+    "moment": "^2.29.4",
+    "most-xml": "~0.3.4",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.41.0",
+    "eslint-plugin-node": "^11.1.0"
+  },
   "main": "index",
   "scripts": {},
   "_id": "most-wf@1.4.0",

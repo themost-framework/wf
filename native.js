@@ -1,13 +1,4 @@
-/**
- * MOST Web Framework
- * A JavaScript Web Framework
- * http://themost.io
- *
- * Copyright (c) 2014, Kyriakos Barbounakis k.barbounakis@gmail.com, Anthi Oikonomou anthioikonomou@gmail.com
- *
- * Released under the BSD3-Clause license
- * Date: 2015-05-17
- */
+// MOST Web Framework 2.0 Codename Blueshift BSD-3-Clause license Copyright (c) 2017-2023, THEMOST LP All rights reserved
 
 var types = require('./types'),
     util = require('util'),
@@ -213,14 +204,9 @@ function EndEventActivity() {
 }
 util.inherits(EndEventActivity, NativeActivity);
 
-var native = {
-    NativeProcess: NativeProcess,
-    NativeActivity: NativeActivity,
-    StartEventActivity: StartEventActivity,
-    EndEventActivity: EndEventActivity
+module.exports = {
+    NativeProcess,
+    NativeActivity,
+    StartEventActivity,
+    EndEventActivity
 };
-
-if (typeof exports !== 'undefined')
-{
-    module.exports = native;
-}

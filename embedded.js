@@ -1,13 +1,4 @@
-/**
- * MOST Web Framework
- * A JavaScript Web Framework
- * http://themost.io
- *
- * Copyright (c) 2014, Kyriakos Barbounakis k.barbounakis@gmail.com, Anthi Oikonomou anthioikonomou@gmail.com
- *
- * Released under the BSD3-Clause license
- * Date: 2014-05-01
- */
+// MOST Web Framework 2.0 Codename Blueshift BSD-3-Clause license Copyright (c) 2017-2023, THEMOST LP All rights reserved
 var async = require('async'),
     path = require('path'),
     xml = require('most-xml'),
@@ -559,12 +550,7 @@ EmbeddedProcessInstanceClient.prototype.writeHistory = function(data, callback) 
     }
 };
 
-var embedded = {
-    EmbeddedProcessEngine: EmbeddedProcessEngine,
-    EmbeddedProcessInstanceClient: EmbeddedProcessInstanceClient
+module.exports = {
+    EmbeddedProcessEngine,
+    EmbeddedProcessInstanceClient
 };
-
-
-if (typeof exports !== 'undefined') {
-    module.exports = embedded;
-}
