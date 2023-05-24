@@ -13,7 +13,7 @@ const {
     BusinessProcessRuntime
 } = require('./types');
 const {NativeProcess, NativeActivity, StartEventActivity, EndEventActivity} = require('./native');
-
+const {BusinessProcessSchemaLoader} = require('./loader');
 
 module.exports = {
     ActivityExecutionResult,
@@ -31,5 +31,6 @@ module.exports = {
     NativeProcess,
     NativeActivity,
     StartEventActivity,
-    EndEventActivity
+    EndEventActivity,
+    BusinessProcessSchemaLoader
 };

@@ -1,0 +1,61 @@
+{
+    "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
+    "@id": "https://themost.io/schemas/ProcessHistory",
+    "name": "ProcessHistory",
+    "title": "ProcessHistory",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "1.0.1",
+    "implements": "Thing",
+    "fields": [
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/additionalType",
+            "name": "additionalType",
+            "value":"javascript:return this.model.name;"
+        },
+        {
+            "@id": "http://schema.org/description",
+            "name": "description",
+            "nullable": false
+        },
+        {
+            "@id": "https://themost.io/schemas/scope",
+            "name": "scope",
+            "title": "Scope",
+            "description": "The scope of this item.",
+            "type": "Text",
+            "value": "javascript:return 'info';"
+        },
+        {
+            "@id": "https://themost.io/schemas/processStatus",
+            "name": "processStatus",
+            "title": "Effective Status",
+            "description": "The effective process status associated with this item.",
+            "type": "ProcessStatusType"
+        },
+        {
+            "@id": "https://themost.io/schemas/processInstance",
+            "name": "processInstance",
+            "title": "Process",
+            "description": "The business process instance where this item belongs.",
+            "type": "ProcessInstance"
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global"
+        },
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        }
+    ]
+}

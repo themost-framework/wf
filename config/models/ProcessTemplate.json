@@ -1,0 +1,55 @@
+{
+    "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
+    "@id": "https://themost.io/schemas/ProcessTemplate",
+    "name": "ProcessTemplate",
+    "title": "Business Process Templates",
+    "description": "A process template is normally a BPMN process which represents a process instance.",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "1.0.1",
+    "implements": "Thing",
+    "fields": [
+        {
+            "@id": "http://schema.org/additionalType",
+            "name": "additionalType",
+            "value": "javascript:return this.model.name;"
+        },
+        {
+            "@id": "http://schema.org/description",
+            "name": "description",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "nullable": false
+        },
+        {
+            "@id": "http://schema.org/alternateName",
+            "name": "alternateName",
+            "nullable": false
+        }
+    ],
+    "constraints": [
+        {
+            "type": "unique",
+            "fields": [
+                "alternateName"
+            ]
+        }
+    ],
+    "eventListeners": [
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global",
+            "account": "Administrators"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ]
+}
