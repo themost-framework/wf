@@ -1,32 +1,34 @@
 {
-    "extends": [
-      "eslint:recommended",
-      "plugin:node/recommended"
+  "parser": "@babel/eslint-parser",
+  "env": {
+  "browser": false,
+  "node": true,
+      "es6": true
+},
+  "extends": [
+      "eslint:recommended"
   ],
-    "parserOptions": {
-      "ecmaVersion": 2015,
+  "parserOptions": {
+      // Only ESLint 6.2.0 and later support ES2020.
+      "ecmaVersion": 2020,
       "sourceType": "module"
-    },
-    "env": {
-      "browser": false,
-      "node": true,
-      "es6": true,
-      "jquery": false
-    },
-    "globals": {
+  },
+  "globals": {
       "describe": false,
-      "it": false
-    },
-    "rules": {
-      "no-console": "warn",
-      "no-invalid-this": "warn",
-      "no-undef": "error",
-      "no-unused-vars": "warn",
-      "quotes": [ "error", "single" ],
-      "no-var": "off",
-      "strict": [
-        2,
-        "never"
+      "it": false,
+      "fdescribe": false,
+      "fit": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "expect": false,
+      "beforeAll": false,
+      "afterAll": false
+  },
+  "rules": {
+      "no-var": "error",
+      "quotes": [
+          "warn",
+          "single"
       ]
-    }
   }
+}

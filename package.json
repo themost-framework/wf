@@ -27,18 +27,25 @@
     "@themost/common": "2.7.5"
   },
   "dependencies": {
+    "@themost/bpmn": "^1.0.0",
     "async": "^2.6.4",
-    "bpmn": "^0.2.2",
     "moment": "^2.29.4",
-    "most-xml": "~0.3.4",
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "dotenv": "^16.0.3",
     "eslint": "^8.41.0",
-    "eslint-plugin-node": "^11.1.0"
+    "eslint-plugin-node": "^11.1.0",
+    "jasmine": "^5.0.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "module-alias": "^2.2.2"
   },
-  "main": "index",
-  "scripts": {},
-  "_id": "most-wf@1.4.0",
-  "_from": "most-wf@"
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  }
 }
