@@ -2,7 +2,7 @@
  * @param {Function(*)} done 
  * @returns 
  */
-function GetTask(done) {
+function GetTask(data, done) {
     return done();
 }
 
@@ -10,8 +10,8 @@ function GetTask(done) {
  * @param {Function(*)} done 
  * @returns 
  */
-function ExecuteTask(done) {
-    return done();
+function ExecuteTask(data, done) {
+    return done(data);
 }
 
 export {

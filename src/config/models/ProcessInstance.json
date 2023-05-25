@@ -2,7 +2,7 @@
     "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
     "@id": "https://themost.io/schemas/ProcessInstance",
     "name": "ProcessInstance",
-    "title": "Process Instances",
+    "title": "ProcessInstances",
     "hidden": false,
     "sealed": false,
     "abstract": false,
@@ -16,7 +16,8 @@
             "description": "The status of the item.",
             "type": "ProcessStatusType",
             "nullable": false,
-            "value": "javascript:return 0;"
+            "expandable": true,
+            "value": "javascript:return { alternateName: 'None' };"
         },
         {
             "@id": "https://themost.io/schemas/template",

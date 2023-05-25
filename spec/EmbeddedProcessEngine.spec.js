@@ -1,4 +1,4 @@
-import { EmbeddedProcessEngine, BusinessProcessSchemaLoader, ProcessTemplate } from '@themost/wf';
+import { EmbeddedProcessEngine, BusinessProcessSchemaLoader, ProcessTemplate, ProcessInstance } from '@themost/wf';
 import { SchemaLoaderStrategy } from '@themost/data';
 import { getApplication } from '@themost/test';
 import { TraceUtils } from '@themost/common';
@@ -59,6 +59,16 @@ describe('EmbeddedProcessEngine',() => {
             'alternateName': 'diagram_1',
             'url': 'spec/bpmn/diagram_1.bpmn'
         });
+        const newItem = {
+            status: {
+                name: 'None'
+            },
+            template: {
+                alternateName: 'diagram_1'
+            },
+            executionDate: new Date()
+        }
+        await context.model(ProcessInstance).silent().save(newItem);
         const engine = new EmbeddedProcessEngine(context.application);
         expect(engine.intervalTimer).toBeFalsy();
         engine.interval = 3000;
@@ -67,8 +77,12 @@ describe('EmbeddedProcessEngine',() => {
         await new Promise((resolve) => {
             setTimeout(() => {
                 resolve()
-            }, engine.interval + 1000)
+            }, engine.interval + 5000)
         });
+        const item = await context.model(ProcessInstance).where('id').equal(newItem.id).silent().getItem();
+        expect(item).toBeTruthy();
+        expect(item.status.name).toEqual('Succeeded')
+
     });
 
 })

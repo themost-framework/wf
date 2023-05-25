@@ -4,6 +4,7 @@ import { ActivityExecutionResult, ActivityStateChangedEventArgs, ActivityExecuti
 import { NativeProcess, NativeActivity, StartEventActivity, EndEventActivity } from './native';
 import { BusinessProcessSchemaLoader } from './loader';
 import { ProcessTemplate } from './models/ProcessTemplate';
+import { ProcessInstance } from './models/ProcessInstance';
 
 export {
     ActivityExecutionResult,
@@ -23,5 +24,6 @@ export {
     StartEventActivity,
     EndEventActivity,
     BusinessProcessSchemaLoader,
-    ProcessTemplate
+    ProcessTemplate,
+    ProcessInstance
 };

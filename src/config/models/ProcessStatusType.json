@@ -2,7 +2,7 @@
     "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
     "@id": "https://themost.io/schemas/ProcessStatusType",
     "name": "ProcessStatusType",
-    "title": "Process Status",
+    "title": "ProcessStatusTypes",
     "description": "Describes the status of a process instance.",
     "hidden": false,
     "sealed": false,
@@ -40,35 +40,27 @@
     ],
     "seed": [
         {
-            "id": 0,
             "name": "None"
         },
         {
-            "id": 1,
             "name": "Succeeded"
         },
         {
-            "id": 2,
-            "name": "Canceled"
+            "name": "Cancelled"
         },
         {
-            "id": 3,
             "name": "Compensated"
         },
         {
-            "id": 4,
             "name": "Faulted"
         },
         {
-            "id": 5,
             "name": "Uninitialized"
         },
         {
-            "id": 6,
             "name": "Started"
         },
         {
-            "id": 7,
             "name": "Paused"
         }
     ]

@@ -2,7 +2,7 @@
     "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
     "@id": "https://themost.io/schemas/ProcessLog",
     "name": "ProcessLog",
-    "title": "ProcessLog",
+    "title": "ProcessLogs",
     "hidden": false,
     "sealed": false,
     "abstract": false,
@@ -11,8 +11,7 @@
     "fields": [
         {
             "@id": "http://schema.org/name",
-            "name": "name",
-            "nullable": false
+            "name": "name"
         },
         {
             "@id": "http://schema.org/additionalType",

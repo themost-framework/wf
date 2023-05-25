@@ -55,92 +55,32 @@ class ActivityEventEmitter extends EventEmitter {
 /**
  * Enumeration of activity result values that qualifies the state of an Activity that has an ActivityExecutionState of Closed.
  */
-function ActivityExecutionResult() {
+class ActivityExecutionResult {
     //
+    static None = 1;
+    static Succeeded = 2;
+    static Cancelled = 3;
+    static Compensated = 4;
+    static Faulted = 5;
+    static Uninitialized = 6;
+    static Started = 7;
+    static Paused = 8;
+
 }
-/**
- * The activity is not in the Closed state.
- * @type {number}
- */
-ActivityExecutionResult.None = 0;
-/**
- * The activity has transitioned to the closed state from the executing state.
- * @type {number}
- */
-ActivityExecutionResult.Succeeded = 1;
-/**
- * The activity has transitioned to the closed state from the canceling state.
- * @type {number}
- */
-ActivityExecutionResult.Canceled = 2;
-/**
- * The activity has transitioned to the closed state from the compensating state.
- * @type {number}
- */
-ActivityExecutionResult.Compensated = 3;
-/**
- * The activity has transitioned to the closed state from the faulting state.
- * @type {number}
- */
-ActivityExecutionResult.Faulted = 4;
-/**
- * 	The activity has transitioned to the closed state from the initialized state
- * @type {number}
- */
-ActivityExecutionResult.Uninitialized = 5;
-/**
- * 	The activity has transitioned to the executing state from the initialized state
- * @type {number}
- */
-ActivityExecutionResult.Started = 6;
-/**
- * 	The activity has transitioned to the pausing state from the executing state
- * @type {number}
- */
-ActivityExecutionResult.Paused = 7;
 
 /**
  * Enumeration of activity state values that correspond to the life cycle of an activity within a running workflow instance.
- * @constructor
+
  */
-function ActivityExecutionState() {
-    //
+class ActivityExecutionState {
+    static Initialized = 1;
+    static Executing = 2;
+    static Cancelling = 3;
+    static Closed = 4;
+    static Compensating = 5;
+    static Faulting = 6;
+    static Pausing = 7;
 }
-/**
- * Represents the state when an activity is being initialized.
- * @type {number}
- */
-ActivityExecutionState.Initialized = 0;
-/**
- * Represents the state when an activity is executing.
- * @type {number}
- */
-ActivityExecutionState.Executing = 1;
-/**
- * Represents the state when an activity is in the process of being canceled.
- * @type {number}
- */
-ActivityExecutionState.Canceling = 2;
-/**
- * Represents the state when an activity is closed.
- * @type {number}
- */
-ActivityExecutionState.Closed = 3;
-/**
- * Represents the state when an activity is compensating.
- * @type {number}
- */
-ActivityExecutionState.Compensating = 4;
-/**
- * Represents the state when an activity is faulting.
- * @type {number}
- */
-ActivityExecutionState.Faulting = 5;
-/**
- * Represents the state when an activity is pausing.
- * @type {number}
- */
-ActivityExecutionState.Pausing = 6;
 
 class ActivityStateChangedEventArgs {
     constructor() {
@@ -148,12 +88,12 @@ class ActivityStateChangedEventArgs {
          * Gets the ActivityExecutionResult of the Activity that raised the event corresponding to the value when the event occurred.
          * @type {number}
          */
-        this.executionResult = 0;
+        this.executionResult = ActivityExecutionResult.None;
         /**
          * Gets the ActivityExecutionState of the Activity that raised the event corresponding to the value when the event occurred.
          * @type {number}
          */
-        this.executionState = 0;
+        this.executionState = ActivityExecutionState.Initialized;
         /**
          * Gets the Activity that raised the event.
          * @type {null}
@@ -252,8 +192,8 @@ class Activity extends EventEmitter {
      * Gets a boolean value which indicates whether current activity has been canceled or not
      * @returns {boolean}
      */
-    canceled() {
-        return (this.executionResult == ActivityExecutionResult.Canceled);
+    cancelled() {
+        return (this.executionResult == ActivityExecutionResult.Cancelled);
     }
     /**
      * Initializes the current activity instance.
@@ -284,7 +224,7 @@ class Activity extends EventEmitter {
             }
             else {
                 //raise event (closed+canceled)
-                self.state(ActivityExecutionState.Closed).result(ActivityExecutionResult.Canceled).raiseEvent('closed', function () { callback(); });
+                self.state(ActivityExecutionState.Closed).result(ActivityExecutionResult.Cancelled).raiseEvent('closed', function () { callback(); });
             }
         });
     }
@@ -332,7 +272,7 @@ class Activity extends EventEmitter {
         switch (this.executionResult) {
             case 0: return 'None';
             case 1: return 'Succeeded';
-            case 2: return 'Canceled';
+            case 2: return 'Cancelled';
             case 3: return 'Compensated';
             case 4: return 'Faulted';
             case 5: return 'Uninitialized';
