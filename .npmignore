@@ -5,6 +5,7 @@ node_modules
 spec
 .nycrc.json
 .nyc_output
+*.log
 
 
 # eslint
@@ -36,3 +37,6 @@ tsconfig.json
 
 # js
 jsconfig.json
+
+# modules
+modules
