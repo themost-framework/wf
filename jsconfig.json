@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "experimentalDecorators": true,
         "paths": {
+            "@themost/wf":["src/index"]
         }
     }
 }

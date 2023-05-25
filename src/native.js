@@ -1,6 +1,6 @@
 // MOST Web Framework 2.0 Codename Blueshift BSD-3-Clause license Copyright (c) 2017-2023, THEMOST LP All rights reserved
-const { SequentialProcess, Activity, ActivityExecutionState } = require('./types');
-const { XDocument } = require('@themost/xml');
+import { SequentialProcess, Activity, ActivityExecutionState } from './types';
+import { XDocument } from '@themost/xml';
 
 const DEFAULT_NS = [
         { prefix:'bpmn2', uri:'http://www.omg.org/spec/BPMN/20100524/MODEL' },
@@ -186,7 +186,7 @@ class EndEventActivity extends NativeActivity {
 }
 
 
-module.exports = {
+export {
     NativeProcess,
     NativeActivity,
     StartEventActivity,

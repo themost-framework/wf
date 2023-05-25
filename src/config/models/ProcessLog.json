@@ -1,8 +1,8 @@
 {
     "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
-    "@id": "https://themost.io/schemas/ProcessHistory",
-    "name": "ProcessHistory",
-    "title": "ProcessHistory",
+    "@id": "https://themost.io/schemas/ProcessLog",
+    "name": "ProcessLog",
+    "title": "ProcessLog",
     "hidden": false,
     "sealed": false,
     "abstract": false,

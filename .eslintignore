@@ -1,2 +1,6 @@
+# typescript
 *.dt.ts
 *.ts
+
+# dist
+dist/

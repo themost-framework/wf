@@ -7,11 +7,12 @@ if (fs.existsSync(path.resolve(process.cwd(), 'jsconfig.json'))) {
     const jsconfig = require(path.resolve(process.cwd(), 'jsconfig.json'));
     if (jsconfig && jsconfig.compilerOptions && jsconfig.compilerOptions.paths) {
         const paths = jsconfig.compilerOptions.paths;
+        const baseUrl = jsconfig.compilerOptions.baseUrl || '.';
         addAliases(Object.keys(paths).reduce((obj, key) => {
             Object.defineProperty(obj, key, {
                 enumerable: true,
                 configurable: true,
-                value: path.resolve(process.cwd(), paths[key])
+                value: path.resolve(process.cwd(), baseUrl, paths[key][0])
             });
             return obj;
         }, {}));

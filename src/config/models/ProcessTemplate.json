@@ -9,6 +9,7 @@
     "abstract": false,
     "version": "1.0.1",
     "implements": "Thing",
+    "classPath": "./models/ProcessTemplate",
     "fields": [
         {
             "@id": "http://schema.org/additionalType",
@@ -17,8 +18,7 @@
         },
         {
             "@id": "http://schema.org/description",
-            "name": "description",
-            "nullable": false
+            "name": "description"
         },
         {
             "@id": "http://schema.org/name",

@@ -1,7 +1,7 @@
 // MOST Web Framework 2.0 Codename Blueshift BSD-3-Clause license Copyright (c) 2017-2023, THEMOST LP All rights reserved
-const { TraceUtils } = require('@themost/common');
-const { EventEmitter } = require('events');
-const async = require('async');
+import { TraceUtils } from '@themost/common';
+import { EventEmitter } from 'events';
+import { applyEachSeries, eachSeries } from 'async';
 
 class ActivityEventEmitter extends EventEmitter {
 
@@ -29,7 +29,7 @@ class ActivityEventEmitter extends EventEmitter {
             return;
         }
         //apply each series
-        async.applyEachSeries(listeners, args, function (err) {
+        applyEachSeries(listeners, args, function (err) {
             callback.call(self, err);
         });
     }
@@ -446,7 +446,7 @@ class CompositeActivity extends Activity {
                         self.state(ActivityExecutionState.Closed).result(ActivityExecutionResult.Faulted).raiseEvent('closed', function () { callback(); });
                     });
                 }
-                async.eachSeries(self.activities, function (activity, cb) {
+                eachSeries(self.activities, function (activity, cb) {
                     // eslint-disable-next-line no-unused-vars
                     activity.execute(context, function (err) {
                         if (activity.executionResult == ActivityExecutionResult.Faulted) {
@@ -555,7 +555,7 @@ class BusinessProcessRuntime extends EventEmitter {
 }
 
 
-module.exports = {
+export {
     ActivityExecutionResult,
     ActivityStateChangedEventArgs,
     ActivityExecutionState,

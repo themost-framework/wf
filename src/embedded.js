@@ -80,8 +80,8 @@ class EmbeddedProcessEngine extends BusinessProcessRuntime {
         this.logger = createLogger();
     }
     start() {
-        if (this.started == true) {
-                return;
+        if (this.started) {
+            return;
         }
         /**
          * @private
@@ -105,7 +105,7 @@ class EmbeddedProcessEngine extends BusinessProcessRuntime {
     log(level, message, p1, p2) {
         try {
             if (this.logger) {
-                this.logger.log.apply(this.logger, arguments);
+                this.logger.log.apply(this.logger, Array.from(arguments));
                 return this;
             }
         }
@@ -114,7 +114,7 @@ class EmbeddedProcessEngine extends BusinessProcessRuntime {
         }
     }
     stop() {
-        if (this.started == true) {
+        if (this.started === false) {
                 return;
         }
         if (this.intervalTimer) {
@@ -137,7 +137,8 @@ class EmbeddedProcessEngine extends BusinessProcessRuntime {
             if (typeof instance === 'undefined' || instance == null) {
                 return callback();
             }
-            let processInstances = context.model('ProcessInstance'), processTemplates = context.model('ProcessTemplate');
+            const processInstances = context.model('ProcessInstance')
+            const processTemplates = context.model('ProcessTemplate');
             self.log('debug', 'Loading business process instance with ID [%s].', instance.id);
             processInstances.where('id').equal(instance.id).silent().flatten().first(function (err, result) {
                 if (err) {
@@ -354,7 +355,7 @@ class EmbeddedProcessEngine extends BusinessProcessRuntime {
                                                             }
                                                             done(data);
                                                         };
-                                                        self.application.unattended(function (context) {
+                                                        unattendExecution(self.application)(function (context) {
                                                             instanceProcess.instance = context.model(instance.additionalType || 'ProcessInstance').convert(instance);
                                                             instanceProcess.instance.status = ActivityExecutionResult.Started; //Started
                                                             instanceProcess.instance.save(context, function (err) {
@@ -426,6 +427,27 @@ class EmbeddedProcessEngine extends BusinessProcessRuntime {
 }
 
 /**
+ * @param {import('@themost/express').ExpressDataApplication} application
+ * @returns {function()}
+ */
+function unattendExecution(application) {
+    /**
+     * @type {function(context)}
+     */
+    return function(func) {
+        const context = application.createContext();
+        const account = application.getConfiguration().getSourceAt('settings/auth/unattendedExecutionAccount');
+        if (account) {
+            context.user = {
+                name: account,
+                authenticationType: 'Basic'
+            }
+        }
+        return func(context);
+    }
+}
+
+/**
  *
  * @param {EmbeddedProcessEngine} self
  */
@@ -438,7 +460,7 @@ function engine_timer(self) {
         if (self.working)
             return;
         self.working = true;
-        self.application.unattended(function(context) {
+        unattendExecution(self.application)(function(context) {
             try {
                 self.log('debug','Getting process instances which have not being started yet.');
                 let q = context.model('ProcessInstance').where('status').equal(ActivityExecutionResult.None)
@@ -493,46 +515,45 @@ function engine_timer(self) {
  * @param {*} instance
  * @constructor
  */
-function EmbeddedProcessInstanceClient(context, instance)
-{
-    this.instance = instance;
-    this.context = context;
+class EmbeddedProcessInstanceClient {
+    constructor(context, instance) {
+        this.instance = instance;
+        this.context = context;
+    }
+    setStatus(status, callback) {
+        let self = this;
+        try {
+            let item = { id: self.instance.id, status: status };
+            self.context.model('ProcessInstance').save(item, function (err) {
+                if (err) {
+                    callback(err);
+                }
+                else {
+                    self.instance.status = item.status;
+                    callback();
+                }
+            });
+        }
+        catch (e) {
+            callback(e);
+        }
+    }
+    writeHistory(data, callback) {
+        let self = this;
+        try {
+            data.ProcessInstance = self.instance.id;
+            data.workflowStatus = self.instance.status;
+            self.context.model('WorkflowHistory').save(data, function (err) {
+                callback(err);
+            });
+        }
+        catch (e) {
+            callback(e);
+        }
+    }
 }
 
-EmbeddedProcessInstanceClient.prototype.setStatus = function(status, callback) {
-    let self = this;
-    try {
-        let item = { id:self.instance.id, status:status };
-        self.context.model('ProcessInstance').save(item, function(err) {
-            if (err) {
-                callback(err);
-            }
-            else {
-                self.instance.status = item.status;
-                callback();
-            }
-        });
-    }
-    catch (e) {
-        callback(e);
-    }
-};
-
-EmbeddedProcessInstanceClient.prototype.writeHistory = function(data, callback) {
-    let self = this;
-    try {
-        data.ProcessInstance = self.instance.id;
-        data.workflowStatus = self.instance.status;
-        self.context.model('WorkflowHistory').save(data, function(err) {
-            callback(err);
-        });
-    }
-    catch (e) {
-        callback(e);
-    }
-};
-
-module.exports = {
+export {
     EmbeddedProcessEngine,
     EmbeddedProcessInstanceClient
-};
+}
