@@ -33,3 +33,6 @@ tsconfig.json
 
 # gitpod
 .gitpod.yml
+
+# js
+jsconfig.json

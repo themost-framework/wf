@@ -2,16 +2,16 @@
  * @param {Function(*)} done 
  * @returns 
  */
-function GetTask(data, done) {
-    return done();
+async function GetTask(data) {
+    return data;
 }
 
 /**
  * @param {Function(*)} done 
  * @returns 
  */
-function ExecuteTask(data, done) {
-    return done(data);
+async function ExecuteTask(data) {
+    return data;
 }
 
 export {
