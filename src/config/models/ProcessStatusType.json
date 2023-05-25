@@ -1,0 +1,67 @@
+{
+    "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
+    "@id": "https://themost.io/schemas/ProcessStatusType",
+    "name": "ProcessStatusType",
+    "title": "ProcessStatusTypes",
+    "description": "Describes the status of a process instance.",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "1.0.1",
+    "implements": "Thing",
+    "fields": [
+        {
+            "@id": "http://schema.org/name",
+            "name": "name",
+            "title": "Name",
+            "description": "The name of the item.",
+            "type": "Text",
+            "nullable": false
+        }
+    ],
+    "constraints": [
+        {
+            "type": "unique",
+            "fields": [
+                "name"
+            ]
+        }
+    ],
+    "privileges": [
+        {
+            "mask": 1,
+            "type": "global",
+            "account": "*"
+        },
+        {
+            "mask": 15,
+            "type": "global"
+        }
+    ],
+    "seed": [
+        {
+            "name": "None"
+        },
+        {
+            "name": "Succeeded"
+        },
+        {
+            "name": "Cancelled"
+        },
+        {
+            "name": "Compensated"
+        },
+        {
+            "name": "Faulted"
+        },
+        {
+            "name": "Uninitialized"
+        },
+        {
+            "name": "Started"
+        },
+        {
+            "name": "Paused"
+        }
+    ]
+}

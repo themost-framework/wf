@@ -1,0 +1,77 @@
+{
+    "$schema": "https://themost-framework.github.io/themost/models/2018/2/schema.json",
+    "@id": "https://themost.io/schemas/ProcessInstance",
+    "name": "ProcessInstance",
+    "title": "ProcessInstances",
+    "hidden": false,
+    "sealed": false,
+    "abstract": false,
+    "version": "1.0.1",
+    "implements": "Thing",
+    "classPath": "./models/ProcessInstance#ProcessInstance",
+    "fields": [
+        {
+            "@id": "https://themost.io/schemas/status",
+            "name": "status",
+            "title": "Status",
+            "description": "The status of the item.",
+            "type": "ProcessStatusType",
+            "nullable": false,
+            "expandable": true,
+            "value": "javascript:return { alternateName: 'None' };"
+        },
+        {
+            "@id": "https://themost.io/schemas/template",
+            "name": "template",
+            "title": "Process Template",
+            "description": "The business process template associated with this item.",
+            "type": "ProcessTemplate",
+            "expandable": true
+        },
+        {
+            "name": "metadata",
+            "title": "Data",
+            "description": "Metadata associated with the process. Normally a JSON formatted object which contains the input data of this business process instance.",
+            "type": "Note"
+        },
+        {
+            "name": "executionDate",
+            "title": "Execution Date",
+            "description": "The date and time when this will be executed.",
+            "type": "DateTime",
+            "value": "javascript:return this.now();"
+        },
+        {
+            "name": "lastExecutionTime",
+            "title": "Last Execution Time",
+            "description": "The date and time when this process was last executed.",
+            "type": "DateTime"
+        },
+        {
+            "name": "badExecutionCount",
+            "title": "Bad Executions",
+            "description": "The number of times the process failed to complete.",
+            "type": "Integer",
+            "value": "javascript:return 0;"
+        },
+        {
+            "name": "source",
+            "title": "Source",
+            "description": "The XML source associated with this business process. This XML source is going to be used for process persistency.",
+            "type": "Note"
+        }
+    ],
+    "constraints": [
+    ],
+    "privileges": [
+        {
+            "mask": 15,
+            "type": "global"
+        },
+        {
+            "mask": 1,
+            "type": "global",
+            "account": "Administrators"
+        }
+    ]
+}

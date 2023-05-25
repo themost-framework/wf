@@ -1,42 +1,59 @@
 {
-  "name": "most-wf",
-  "version": "1.8.1",
+  "name": "@themost/wf",
+  "version": "2.0.0",
   "description": "Most Web Framework Business Process Services",
   "homepage": "http://themost.io/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kbarbounakis/most-wf.git"
+    "url": "https://github.com/themost-framework/wf.git"
   },
   "keywords": [
-    "most-web",
-    "most-wf",
+    "@themost",
+    "wf",
     "bpmn",
     "bpmn2",
-    "web",
     "framework",
-    "workflows",
-    "services",
-    "business processes"
+    "workflow",
+    "service",
+    "business process"
   ],
-  "author": {
-    "name": "Kyriakos Barbounakis",
-    "email": "k.barbounakis@gmail.com"
-  },
   "licenses": [
     {
       "type": "BSD-3 Clause"
     }
   ],
-  "dependencies": {
-    "async": "0.9.0",
-    "bpmn": "~0.2.0",
-    "most-xml": "~0.3.4",
-    "winston": "^1.0.2",
-    "moment": "^2.10.2"
+  "peerDependencies": {
+    "@themost/xml": "^2",
+    "@themost/data": "^2",
+    "@themost/query": "^2",
+    "@themost/common": "2"
   },
-  "devDependencies": {},
-  "main": "index",
-  "scripts": {},
-  "_id": "most-wf@1.4.0",
-  "_from": "most-wf@"
+  "dependencies": {
+    "@themost/bpmn": "^1.0.1",
+    "async": "^2.6.4",
+    "i": "^0.3.7",
+    "logform": "^2.5.1",
+    "moment": "^2.29.4",
+    "npm": "^9.6.7",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.20.12",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "@themost/test": "^2.3.0",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.41.0",
+    "eslint-plugin-node": "^11.1.0",
+    "jasmine": "^5.0.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "module-alias": "^2.2.2"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jasmine",
+    "build": "rimraf dist && babel src --out-dir dist --copy-files --source-maps --verbose"
+  }
 }

@@ -1,0 +1,42 @@
+# nodejs
+node_modules
+
+# test
+spec
+.nycrc.json
+.nyc_output
+*.log
+
+
+# eslint
+.eslintrc
+.eslintignore
+
+# dotenv
+.env
+
+# ide
+.DS_Store
+.vscode
+.theia
+.idea
+.devcontainer
+
+# github
+.github
+
+# babel
+babel.config.js
+rollup.config.js
+
+# typescript
+tsconfig.json
+
+# gitpod
+.gitpod.yml
+
+# js
+jsconfig.json
+
+# modules
+modules
