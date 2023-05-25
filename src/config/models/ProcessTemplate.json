@@ -9,7 +9,7 @@
     "abstract": false,
     "version": "1.0.1",
     "implements": "Thing",
-    "classPath": "./models/ProcessTemplate",
+    "classPath": "./models/ProcessTemplate#ProcessTemplate",
     "fields": [
         {
             "@id": "http://schema.org/additionalType",

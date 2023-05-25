@@ -31,7 +31,10 @@
   "dependencies": {
     "@themost/bpmn": "^1.0.0",
     "async": "^2.6.4",
+    "i": "^0.3.7",
+    "logform": "^2.5.1",
     "moment": "^2.29.4",
+    "npm": "^9.6.7",
     "winston": "^3.8.2"
   },
   "devDependencies": {

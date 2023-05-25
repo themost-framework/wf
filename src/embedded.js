@@ -1,4 +1,6 @@
 // MOST Web Framework 2.0 Codename Blueshift BSD-3-Clause license Copyright (c) 2017-2023, THEMOST LP All rights reserved
+import winston from 'winston';
+import { format } from 'logform'
 const async = require('async');
 const path = require('path');
 const { XDocument } = require('@themost/xml');
@@ -8,13 +10,15 @@ const bpmn = require('@themost/bpmn');
 const fs = require('fs');
 
 function createLogger() {
-    let winston = require('winston'),
-        /**
-         * @type {{mkdir:Function,mkdirSync}}
-         */
-        fs = require('fs');
+    const loggerFormat = format.combine(
+        format.timestamp(),
+        format.errors({ stack: true }),
+        format.metadata(),
+        format.json(),
+      )
     if (process.env.NODE_ENV==='development') {
         return new winston.createLogger({
+            format: loggerFormat,
             transports: [
                 new (winston.transports.Console)({ level: 'debug', json:false, timestamp: function() { return (new Date()).toUTCString(); } })
             ]
@@ -22,6 +26,7 @@ function createLogger() {
     }
     else {
         let logger = new winston.createLogger({
+            format: loggerFormat,
             transports: [
                 new (winston.transports.File)({ level: (process.env.NODE_ENV==='development')?'debug':'info',timestamp: function() { return (new Date()).toUTCString(); }, filename: path.join(process.cwd(), 'logs/bpmn.log'), json:false, maxsize:1536000})
             ]
@@ -34,6 +39,7 @@ function createLogger() {
             if (e.code!=='EEXIST') {
                 console.log('An error occured while creating log directory (/logs/).Process logging is falling to console only logging.');
                 return new (winston.Logger)({
+                    format: loggerFormat,
                     transports: [
                         new (winston.transports.Console)({ level: (process.env.NODE_ENV==='development')?'debug':'info' })
                     ]
@@ -412,8 +418,8 @@ class EmbeddedProcessEngine extends BusinessProcessRuntime {
             });
 
         }
-        catch (e) {
-            callback(e);
+        catch (err) {
+            return callback(err);
         }
     }
 }
@@ -490,14 +496,14 @@ function engine_timer(self) {
 
                 });
             }
-            catch (e) {
-                self.log('error', e);
+            catch (err) {
+                self.log('error', err);
                 context.finalize(resetWorking);
             }
         });
     }
-    catch(e) {
-        self.log('error',e);
+    catch(err) {
+        self.log('error', err);
         resetWorking();
     }
 }
@@ -523,8 +529,8 @@ class EmbeddedProcessInstanceClient {
                 return callback(err);
             });
         }
-        catch (e) {
-            callback(e);
+        catch (err) {
+            callback(err);
         }
     }
     writeHistory(data, callback) {
@@ -538,8 +544,8 @@ class EmbeddedProcessInstanceClient {
                 return callback(err);
             });
         }
-        catch (e) {
-            callback(e);
+        catch (err) {
+            return callback(err);
         }
     }
 }

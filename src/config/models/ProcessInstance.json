@@ -8,6 +8,7 @@
     "abstract": false,
     "version": "1.0.1",
     "implements": "Thing",
+    "classPath": "./models/ProcessInstance#ProcessInstance",
     "fields": [
         {
             "@id": "https://themost.io/schemas/status",
